@@ -1,3 +1,4 @@
+import { UserStatus } from "src/utils/enums/user.enum";
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'User' })
@@ -10,10 +11,10 @@ export class UserEntity {
     })
     username: string;
 
-    // @Column({
-    //     type: String
-    // })
-    // email: string;
+    @Column({
+        type: String
+    })
+    email: string;
 
     @Column({
         type: String
@@ -26,7 +27,8 @@ export class UserEntity {
     avatar: string;
 
     @Column({
-        type: Number
+        type: Number,
+        default: UserStatus.ACTIVE
     })
     status: number
 }
