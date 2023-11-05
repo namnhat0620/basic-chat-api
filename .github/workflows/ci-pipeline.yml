@@ -1,0 +1,52 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      id: test
+      run: |
+        if npm test; then
+          echo "result=success"
+        else
+          echo "result=failure"
+        fi
+
+  build:
+    runs-on: ubuntu-20.04
+    needs: test
+
+    steps:
+      - uses: action/checkout@v3
+
+      - name: Login into Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
+
+      - name: Build docker image
+        run: docker build --tag phatnguyen1812/qldapm:latest .
+
+      - name: Push into Docker Hub
+        run: docker push phatnguyen1812/qldapm:latest
+      
+      
