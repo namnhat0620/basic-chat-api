@@ -55,6 +55,7 @@ pipeline {
                     sshagent(credentials: ['ssh-remote-key']) {
                         // // SSH into the remote server and run docker-compose down
                         sh '''
+                            ssh ec2-user@54.179.96.14 << EOF
                             if [ "$(docker-compose -f /home/ec2-user/app/docker-compose.yml ps -q)" ]; then
                                 docker-compose -f /home/ec2-user/app/docker-compose.yml down
                             fi
@@ -71,7 +72,7 @@ pipeline {
 
                         // Start container
                         sh '''
-                        ssh ec2-user@54.254.223.51 "docker-compose -f /home/ec2-user/app/docker-compose.yml up -d"
+                            ssh ec2-user@54.254.223.51 "docker-compose -f /home/ec2-user/app/docker-compose.yml up -d"
                         '''
                     }
                 }
