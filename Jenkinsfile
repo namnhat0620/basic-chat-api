@@ -52,7 +52,7 @@ pipeline {
             steps {
                 sh 'echo "Deploy!"'
                 script {
-                    sshagent(credentials: ['ssh-remote-key']) {
+                    sshagent(credentials: ['quanly-ssh']) {
                         // // SSH into the remote server and run docker-compose down
                         // sh '''
                         //     ssh ec2-user@54.179.96.14 << EOF
@@ -62,7 +62,7 @@ pipeline {
                         // '''
 
                         //Delte old compose file
-                        sh 'ssh ec2-user@54.254.223.51 "sudo rm -rf /home/ec2-user/app"'
+                        sh 'ssh ec2-user@54.254.223.51 "sudo rm -rf /home/ec2-user/app/docker-compose.yml /home/ec2-user/app/nginx.conf"'
 
                         // Copy docker-compose
                         sh 'scp docker-compose.yml ec2-user@54.254.223.51:/home/ec2-user/app'
