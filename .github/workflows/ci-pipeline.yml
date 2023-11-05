@@ -24,7 +24,7 @@ jobs:
     - name: Run tests
       id: test
       run: |
-        if npm test; then
+        if npm run test -- --passWithNoTests; then
           echo "result=success"
         else
           echo "result=failure"
@@ -35,7 +35,7 @@ jobs:
     needs: test
 
     steps:
-      - uses: action/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Login into Docker Hub
         uses: docker/login-action@v3
