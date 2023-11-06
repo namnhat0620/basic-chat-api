@@ -1,0 +1,10 @@
+.socialIcon_container{
+    display: flex;
+    
+}
+
+i.socialIcon{
+    width: 20px;
+    height: 20px;
+    position: relative;
+}

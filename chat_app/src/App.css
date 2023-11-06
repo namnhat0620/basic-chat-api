@@ -1,0 +1,17 @@
+:root{
+  --main-color: #1687A7;
+  --primary-color: #276678;
+  --hover-bg: #9DC1DC;
+  --onclick-bg: #BAD1E4;
+  --receive-message-color: #D3E0EA;
+  --gray-bg: #F6F5F5;
+}
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}

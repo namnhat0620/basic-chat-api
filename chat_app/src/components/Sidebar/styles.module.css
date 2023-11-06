@@ -1,0 +1,26 @@
+.Sidebar_container{
+    background-color:white;
+    width: 350px;
+    height: 100vh;
+    display: flex;
+    
+}
+
+.wrapper_icon{
+    background-color: var(--gray-bg);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.wrapper_icon:hover{
+    background-color: var(--hover-bg);
+}
+
+.icon_sidebar{
+    color: var(--primary-color);
+}
