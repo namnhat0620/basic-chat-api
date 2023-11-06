@@ -14,8 +14,7 @@ export class BaseResponse {
     })
     message: string
 
-    @ApiProperty()
-    data: any
+    data: any;
 
     constructor(data?: any) {
         this.statusCode = data?.statusCode || data?.status || HttpStatus.OK;
