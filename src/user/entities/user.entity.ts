@@ -1,7 +1,7 @@
 import { UserStatus } from "src/utils/enums/user.enum";
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: 'User' })
+@Entity('User')
 export class UserEntity {
     @PrimaryGeneratedColumn()
     user_id: number;

@@ -4,9 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { ValidationPipe } from './utils/validator/validation.pipe';
+import { FriendModule } from './friend/friend.module';
+import { FriendEntity } from './friend/entities/friend.entity';
+import { FriendRequestEntity } from './friend/entities/friend-request.entity';
 
 @Module({
-  imports: [UserModule,
+  imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'sql12.freemysqlhosting.net',
@@ -14,8 +17,10 @@ import { ValidationPipe } from './utils/validator/validation.pipe';
       username: 'sql12659071',
       password: 'lJzIr9B6d1',
       database: 'sql12659071',
-      entities: [UserEntity],
+      entities: [FriendEntity, UserEntity, FriendRequestEntity],
     }),
+    UserModule,
+    FriendModule,
   ],
   controllers: [],
   providers: [
