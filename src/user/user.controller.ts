@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpStatus, Post, Query, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { BaseResponse } from 'src/utils/response/base.response';
+import { BaseResponse } from '../utils/response/base.response';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { SwaggerSignInResponse } from './response/sign-in.response';

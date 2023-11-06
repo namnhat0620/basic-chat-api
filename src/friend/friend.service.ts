@@ -1,23 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
-import { RequestFriendDto } from './dto/request-friend.dto';
-import { FriendEntity } from './entities/friend.entity';
-import { FriendRequestEntity } from './entities/friend-request.entity';
+import { UserEntity } from '../user/entities/user.entity';
+import { GetDetailUserResponse } from '../user/response/get-detail.response';
 import { UserService } from '../user/user.service';
-import { BaseResponse } from '../utils/response/base.response';
-import { GetListRequestFriendDto } from './dto/get-list-request-friend.dto';
 import { ListRequestFriendEnum } from '../utils/enums/friend.enum';
+import { GetListRequestFriendDto } from './dto/get-list-request-friend.dto';
+import { RequestFriendDto } from './dto/request-friend.dto';
+import { FriendRequestEntity } from './entities/friend-request.entity';
+import { FriendEntity } from './entities/friend.entity';
 import { GetListRequestFriendResponse } from './response/get-list-request-friend.response';
-import { GetDetailUserResponse } from 'src/user/response/get-detail.response';
 
 @Injectable()
 export class FriendService {
   constructor(
-    @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
-
     @InjectRepository(FriendEntity)
     private friendRepository: Repository<FriendEntity>,
 

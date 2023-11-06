@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { UserEntity } from './entities/user.entity';
 import { SignInResponse } from './response/sign-in.response';
-import { UserStatus } from 'src/utils/enums/user.enum';
+import { UserStatus } from '../utils/enums/user.enum';
 import { GetDetailUserDto } from './dto/get-detail.dto';
 import { GetDetailUserResponse } from './response/get-detail.response';
 

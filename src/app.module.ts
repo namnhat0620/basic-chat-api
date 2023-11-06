@@ -7,6 +7,9 @@ import { ValidationPipe } from './utils/validator/validation.pipe';
 import { FriendModule } from './friend/friend.module';
 import { FriendEntity } from './friend/entities/friend.entity';
 import { FriendRequestEntity } from './friend/entities/friend-request.entity';
+import { ChatRoomModule } from './chat_room/chat_room.module';
+import { ChatRoomEntity } from './chat_room/entities/chat_room.entity';
+import { RoomMemberEntity } from './chat_room/entities/room_member.entity';
 
 @Module({
   imports: [
@@ -17,10 +20,11 @@ import { FriendRequestEntity } from './friend/entities/friend-request.entity';
       username: 'sql12659071',
       password: 'lJzIr9B6d1',
       database: 'sql12659071',
-      entities: [FriendEntity, UserEntity, FriendRequestEntity],
+      entities: [FriendEntity, UserEntity, FriendRequestEntity, ChatRoomEntity, RoomMemberEntity],
     }),
     UserModule,
     FriendModule,
+    ChatRoomModule,
   ],
   controllers: [],
   providers: [

@@ -1,28 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum } from "class-validator";
-import { ListRequestFriendEnum } from "src/utils/enums/friend.enum";
+import { PaginationDto } from "../../utils/dto/pagination.dto";
+import { ListRequestFriendEnum } from "../../utils/enums/friend.enum";
 
-export class GetListRequestFriendDto {
+export class GetListRequestFriendDto extends PaginationDto {
     @ApiProperty({
         type: ListRequestFriendEnum,
         default: -1,
         description: `
-        0: Ds bạn bè,
         1: Ds lời mời bạn đã nhận,
-        2: Ds lời mời kết bạn đã gửi
+        2: Ds lời mời kết bạn đã gửi,
+        Còn lại: Ds bạn bè
         `
     })
     type: ListRequestFriendEnum
-
-    @ApiProperty({
-        type: Number,
-        default: 1
-    })
-    page: number
-
-    @ApiProperty({
-        type: Number,
-        default: 20
-    })
-    limit: number
 }
