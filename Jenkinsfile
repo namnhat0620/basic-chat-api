@@ -54,13 +54,11 @@ pipeline {
                 script {
                     sshagent(credentials: ['ubuntu-key']) {
                         // // SSH into the remote server and run docker-compose down
-                        // sh '''
-                        //     ssh ec2-user@54.179.96.14 << EOF
-                        //     if [ "$(docker-compose -f /home/ec2-user/app/docker-compose.yml ps -q)" ]; then
-                        //         docker-compose -f /home/ec2-user/app/docker-compose.yml down
-                        //     fi
-                        // '''
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@54.179.96.14 "docker-compose -f /home/ec2-user/app/docker-compose.yml down"'
+
                         sh 'ssh -o StrictHostKeyChecking=no ec2-user@54.169.206.88 "mkdir -p /home/ec2-user/app"'
+
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@54.169.206.88 "docker pull phatnguyen1812/qldapm:latest"'
 
                         // Copy docker-compose
                         sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@54.169.206.88:/home/ec2-user/app'
