@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatRoomEntity } from './entities/chat_room.entity';
 import { Repository } from 'typeorm';
@@ -6,7 +6,7 @@ import { CreateChatRoomDto } from './dto/create-chat_room.dto';
 import { UserService } from '../user/user.service';
 import { RoomMemberEntity } from './entities/room_member.entity';
 import { PaginationDto } from '../utils/dto/pagination.dto';
-import { GetListChatRoomResponse, GetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
+import { GetChatRoomResponse, GetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
 
 @Injectable()
 export class ChatRoomService {
@@ -57,7 +57,22 @@ export class ChatRoomService {
       skip
     })
 
-    const list = listRoomMember.map(roomMember => new GetListChatRoomResponse(roomMember.chat_room));
+    const list = listRoomMember.map(roomMember => new GetChatRoomResponse(roomMember.chat_room));
     return { limit, total_record, list };
+  }
+
+  //============SUPPORT FUNCTION=================//
+
+  /*
+  * Lấy danh sách member trong phòng
+  */
+  async getChatRoom(user_id: number, room_id: number): Promise<ChatRoomEntity> {
+    if (!user_id || !room_id) return;
+    const roomMember = await this.roomMemberRepository.findOne({
+      where: { user_id, room_id },
+      relations: { chat_room: { room_member: true } }
+    });
+    if (!roomMember) throw new HttpException('User không phải là thành viên cuộc trò chuyện', HttpStatus.FORBIDDEN)
+    return roomMember.chat_room;
   }
 }

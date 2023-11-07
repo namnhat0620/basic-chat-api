@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RoomMemberEntity } from "./room_member.entity";
 
 @Entity('ChatRoom')
 export class ChatRoomEntity {
@@ -21,4 +22,7 @@ export class ChatRoomEntity {
         type: 'datetime'
     })
     date_created: Date
+
+    @OneToMany(() => RoomMemberEntity, (roomMember) => roomMember.chat_room)
+    room_member: RoomMemberEntity[]
 }
