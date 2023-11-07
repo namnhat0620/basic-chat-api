@@ -54,21 +54,21 @@ pipeline {
                 script {
                     sshagent(credentials: ['ubuntu-key']) {
                         // // SSH into the remote server and run docker-compose down
-                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@54.179.96.14 "docker-compose -f /home/ec2-user/app/docker-compose.yml down"'
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@18.142.253.53 "docker-compose -f /home/ec2-user/app/docker-compose.yml down"'
 
-                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@54.169.206.88 "mkdir -p /home/ec2-user/app"'
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@18.142.253.53 "mkdir -p /home/ec2-user/app"'
 
-                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@54.169.206.88 "docker pull phatnguyen1812/qldapm:latest"'
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@18.142.253.53 "docker pull phatnguyen1812/qldapm:latest"'
 
                         // Copy docker-compose
-                        sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@54.169.206.88:/home/ec2-user/app'
+                        sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@18.142.253.53:/home/ec2-user/app'
 
                         // Copy nginx.conf file
-                        sh 'scp -o StrictHostKeyChecking=no nginx.conf ec2-user@54.169.206.88:/home/ec2-user/app'
+                        sh 'scp -o StrictHostKeyChecking=no nginx.conf ec2-user@18.142.253.53:/home/ec2-user/app'
 
                         // Start container
                         sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@54.169.206.88 "docker-compose -f /home/ec2-user/app/docker-compose.yml up -d"
+                        ssh -o StrictHostKeyChecking=no ec2-user@18.142.253.53 "docker-compose -f /home/ec2-user/app/docker-compose.yml up -d"
                         '''
                     }
                 }
