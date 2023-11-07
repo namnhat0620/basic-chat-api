@@ -2,8 +2,8 @@ import { Suspense, lazy } from "react";// use to loading , loading screen until 
 import { Navigate, useRoutes } from "react-router-dom";
 
 // layouts
-import DashboardLayout from "../layouts/dashboard";
-import MainLayout from "../layouts/main";
+import AuthenLayout from "../layouts/AuthenLayout";
+import MainLayout from "../layouts/MainLayout";
 
 // config
 import { DEFAULT_PATH } from "../config";
@@ -22,13 +22,28 @@ export default function Router() {
   return useRoutes([
     
     {
-      path: "/login",
-      element: <LoginPage/>
+      path: '/auth',
+      element: <AuthenLayout/>,
+      children:[
+        {element: <LoginPage/>, path:'login'},
+        /*/{element: <RegisterPage/>, path:'register'},
+        {element: <ResetPasswordPage/>, path:'reset-password'},
+        {element: <NewPasswordPage/>, path:'new-password'},*/
+      ]
     },
     {
       path: "/",
-      element: <ChatApp/>
-    }
+      element: <MainLayout />,
+      children: [
+        { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
+        { path: "app", element: <ChatApp /> },
+        { path: "allmessages", element: <AllMessages /> },
+        { path: "allfriends", element: <AllFriends /> },
+        { path: "404", element: <Page404 /> },
+        { path: "*", element: <Navigate to="/404" replace /> },
+      ],
+    },
+    { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }
 
@@ -44,3 +59,10 @@ const Page404 = Loadable(
   lazy(() => import("../pages/404ErrorPage")),
 );
 
+const AllMessages = Loadable(
+  lazy(()=>import("../components/Messages/AllMessages"))
+)
+
+const AllFriends = Loadable(
+  lazy(()=>import("../components/AllFriends/AllFriends"))
+)

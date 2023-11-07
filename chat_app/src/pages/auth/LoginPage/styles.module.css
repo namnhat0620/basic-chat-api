@@ -68,6 +68,18 @@ h3{
     transition: 0.5s;
 }
 
+.showPasswordIcon{
+    position: absolute;
+    right: 5%;
+    top: 30%;   
+    color: var(--primary-color);
+}
+
+
+.showPasswordIcon:hover {
+    color: var(--main-color);
+    cursor: pointer;
+    }
 
 
 /*----*/

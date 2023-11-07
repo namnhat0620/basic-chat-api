@@ -46,9 +46,9 @@ const CreateAccount = (props) => {
       };
     return (
         <div className={styles.popup}>
-            <div className={styles.formSignup}>
-                <h1 style={{color: "var(--main-color)"}}>Create Account</h1>
                 <form onSubmit={handleSubmit} className={styles.formSignup}>
+                    
+                <h1 style={{color: "var(--main-color)"}}>Create Account</h1>
                     <label>
                         Full Name:
                         <div className={styles.inputBox}>
@@ -79,7 +79,7 @@ const CreateAccount = (props) => {
                             onChange={handleInputChange}
                             required='required'
                             />
-                            <i onClick={togglePasswordVisiblity}>{eye}</i>{" "}
+                            <i className={styles.showPasswordIcon} onClick={togglePasswordVisiblity}>{eye}</i>{" "}
                         </div>
                     </label>
                     <label>
@@ -91,7 +91,7 @@ const CreateAccount = (props) => {
                                 name='confirmpassword' 
                                 required='required'
                                 />
-                            <i onClick={togglePasswordVisiblity}>{eye}</i>{" "}
+                            <i className={styles.showPasswordIcon} onClick={togglePasswordVisiblity}>{eye}</i>{" "}
                         </div>
                     </label>
                     
@@ -103,25 +103,24 @@ const CreateAccount = (props) => {
                        
                         </label>
                         
-                        <label>
-                            <span style={{marginLeft: "20px"}}>Gender</span>
+                        <div>
+                            <div>Gender</div>
                             <select value={account.gender} onChange={handleInputChange} name="gender" type="text" defaultValue="Others">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Others">Others</option>
                             </select>
-                        </label>
+                        </div>
                     </div>
 
                     <button type='submit'>Sign up</button>
 
                     <label style={{width: "300px", textAlign:'center', marginTop: '10px', alignItems: 'center'}}>
-                        <span style={{fontSize: "12px"}}>Already have an account?</span>
+                        <span style={{fontSize: "12px", }}>Already have an account?</span>
                         <button onClick={props.toggle} className={styles.signin}>Sign in</button>
                     </label>
                 </form>
                 
-            </div>
         </div>
     )
 }

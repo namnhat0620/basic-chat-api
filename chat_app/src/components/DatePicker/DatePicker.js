@@ -13,17 +13,18 @@ const DatePickerDiv = styled.div`
 const CustomDatePickDiv = styled.div`
   width: 140px;
   height: 40px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 20px;
   border: 2px solid lightgray;
 `;
+
 
 const UserDatePicker = () => {
     const [startDate, setStartDate] = useState(new Date());
     const CustomInput = React.forwardRef((props, ref) => {
         return (
           <CustomDatePickDiv>
-            <div onClick={props.onClick} ref={ref} style={{display: "flex", justifyContent: "space-between", marginRight: '-10px'}}>
+            <div onClick={props.onClick} ref={ref} style={{display: "flex", justifyContent: "space-between", marginRight: '-5px'}}>
               <span>{props.value || props.placeholder}</span>
               <FontAwesomeIcon icon={faCalendarAlt} onClick={props.onClick} />
             </div>

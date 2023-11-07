@@ -22,7 +22,15 @@
 }
 
 .wrapper_icon.clicked{
-    background-color: blue !important;
+    background-color: blue;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .wrapper_icon[id=icon]{

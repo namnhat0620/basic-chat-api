@@ -1,0 +1,66 @@
+.container{
+    width: 300px;
+    border-right: 2px solid gray;
+    height: 90vh;
+    position: absolute;
+    top: 60px;
+    left: 80px;
+    overflow: hidden;
+    background-color: var(--gray-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.container h1{
+
+    padding: 20px 10px 10px 10px;
+    color: var(--main-color);
+    font-weight: 500;
+    font-size: large;
+    background-color: white;
+    border-bottom: 1px solid var(--main-color);
+}
+
+.Friends_container{
+    width: 300px;
+    height: auto;
+    overflow: auto;
+}
+
+
+/*----*/
+.Friend_container{
+    padding: 20px;
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    background-color: white;
+    cursor: pointer;
+}
+
+.Friend_container:hover{
+    background-color: var(--onclick-bg);
+}
+
+.avatar_message{
+    width: 45px;
+    height: 45px;
+    max-width:100%;
+    max-height:100%;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.content_message {
+    max-width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+
+    
+}
+.content label{
+    color: var(--primary-color);
+    font-weight: bold;
+}

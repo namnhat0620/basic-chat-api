@@ -1,23 +1,25 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-import SideBar from "./SideBar";
+import Sidebar from "../components/Sidebar/Sidebar";
+import Header from "../components/Header/Header";
 
 const isAuthenticated = true;
 
-const DashboardLayout = () => {
+const MainLayout = () => {
 
 if(!isAuthenticated){
   return <Navigate to='/auth/login'/>;
 }
 
   return (
-    <div direction='row'>
+    <div>
       {/* SideBar */}
-      <SideBar/>
+      <Header/>
+      <Sidebar/>
       <Outlet />
     </div>
     
   );
 };
 
-export default DashboardLayout;
+export default MainLayout;

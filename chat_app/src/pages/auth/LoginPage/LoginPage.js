@@ -79,7 +79,7 @@ const LoginPage = () => {
               onChange={handleInputChange}
               required='required'
             />
-            <i onClick={togglePasswordVisiblity}>{eye}</i>{" "}
+            <i className={styles.showPasswordIcon} onClick={togglePasswordVisiblity}>{eye}</i>{" "}
           </div>
 
           <div className={styles.forget}>

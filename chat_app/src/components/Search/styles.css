@@ -1,0 +1,27 @@
+.search_container{
+    padding: 18px 10px 10px 10px;
+    background-color: white;
+    width: 300px;
+}
+
+.search_container input{
+    background-color: var(--gray-bg);
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 240px;
+    margin-right: 10px;
+}
+
+.search_container input:focus{
+    outline: none;
+}
+
+.search_container i{
+    color: var(--main-color);
+    cursor: pointer;
+}
+.search_container i:hover{
+  
+    color: var(--hover-bg);
+}
