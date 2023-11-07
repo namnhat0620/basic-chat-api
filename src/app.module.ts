@@ -10,6 +10,10 @@ import { FriendRequestEntity } from './friend/entities/friend-request.entity';
 import { ChatRoomModule } from './chat_room/chat_room.module';
 import { ChatRoomEntity } from './chat_room/entities/chat_room.entity';
 import { RoomMemberEntity } from './chat_room/entities/room_member.entity';
+import { MessageModule } from './message/message.module';
+import { MessageEntity } from './message/entities/message.entity';
+import { GatewayModule } from './gateway/gateway.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -20,11 +24,14 @@ import { RoomMemberEntity } from './chat_room/entities/room_member.entity';
       username: 'sql12659071',
       password: 'lJzIr9B6d1',
       database: 'sql12659071',
-      entities: [FriendEntity, UserEntity, FriendRequestEntity, ChatRoomEntity, RoomMemberEntity],
+      entities: [FriendEntity, UserEntity, FriendRequestEntity, ChatRoomEntity, RoomMemberEntity, MessageEntity],
     }),
+    CacheModule.register(),
     UserModule,
     FriendModule,
     ChatRoomModule,
+    MessageModule,
+    GatewayModule,
   ],
   controllers: [],
   providers: [

@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { BaseResponse } from "../../utils/response/base.response";
 import { PaginationResponse } from "../../utils/response/pagination.response";
 
-export class GetListChatRoomResponse {
+export class GetChatRoomResponse {
     @ApiProperty({
         type: Number
     })
@@ -18,23 +18,23 @@ export class GetListChatRoomResponse {
     })
     avatar: string;
 
-    constructor(data?: GetListChatRoomResponse) {
+    constructor(data?: GetChatRoomResponse) {
         this.room_id = data?.room_id;
         this.room_name = data?.room_name;
         this.avatar = data?.avatar;
     }
 
-    static mapToList(data?: GetListChatRoomResponse[]) {
-        return data?.map(item => new GetListChatRoomResponse(item)) || []
+    static mapToList(data?: GetChatRoomResponse[]) {
+        return data?.map(item => new GetChatRoomResponse(item)) || []
     }
 }
 
 export class GetListChatRoomResponsePagination extends PaginationResponse {
     @ApiProperty({
-        type: GetListChatRoomResponse,
+        type: GetChatRoomResponse,
         isArray: true
     })
-    list: GetListChatRoomResponse[]
+    list: GetChatRoomResponse[]
 }
 
 export class SwaggerGetListChatRoomResponsePagination extends BaseResponse {

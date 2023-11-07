@@ -15,25 +15,6 @@ export class UserService {
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
   ) { }
-
-  async checkUsers(user_ids: number[]) {
-    if (user_ids.length === 1) {
-      const user = await this.userRepository.findOneBy({
-        user_id: +user_ids[0],
-        status: UserStatus.ACTIVE
-      })
-      if (user) return user;
-      else throw new HttpException('User không tồn tại hoặc đã bị khóa', HttpStatus.NOT_FOUND)
-    } else {
-      const listUser = await this.userRepository.findBy({
-        user_id: In(user_ids),
-        status: UserStatus.ACTIVE
-      })
-      if (listUser.length === user_ids.length) return listUser
-      else throw new HttpException('User không tồn tại hoặc đã bị khóa', HttpStatus.NOT_FOUND)
-    }
-  }
-
   async create(createUserDto: CreateUserDto) {
     const { avatar, username, email, password } = createUserDto
     //Kiểm tra username/email đã được dùng để đk trước đó chưa
@@ -78,5 +59,25 @@ export class UserService {
     ]);
     if (!user) throw new HttpException('Không tìm thấy user', HttpStatus.NOT_FOUND);
     return new GetDetailUserResponse(user)
+  }
+
+
+  //============SUPPORT FUNCTION=================//
+  async checkUsers(user_ids: number[]) {
+    if (user_ids.length === 1) {
+      const user = await this.userRepository.findOneBy({
+        user_id: +user_ids[0],
+        status: UserStatus.ACTIVE
+      })
+      if (user) return [user];
+      else throw new HttpException('User không tồn tại hoặc đã bị khóa', HttpStatus.NOT_FOUND)
+    } else {
+      const listUser = await this.userRepository.findBy({
+        user_id: In(user_ids),
+        status: UserStatus.ACTIVE
+      })
+      if (listUser.length === user_ids.length) return listUser
+      else throw new HttpException('User không tồn tại hoặc đã bị khóa', HttpStatus.NOT_FOUND)
+    }
   }
 }
