@@ -23,15 +23,19 @@ const LoginPage = () => {
     password: ""
   });
   const [showCreate, setCreate] = useState(false)
-
   const [passwordShown, setPasswordShown] = useState(false);
   
+  const [isSuccess, setSuccess] = useState(true)
+
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
 
   const togglePopup = () => {
     setCreate(!showCreate)
+    if(isSuccess){
+      setSuccess(true)
+    }
   }
   
   const handleInputChange = (event) => {
@@ -62,7 +66,7 @@ const LoginPage = () => {
         <h3>Sign in</h3>
           <div className={styles.inputBox}>
             <input
-              placeholder='Email or Phone number...'
+              placeholder='Email...'
               type="text"
               name="email"
               value={account.email}
@@ -72,7 +76,7 @@ const LoginPage = () => {
           </div>
           <div className={styles.inputBox}>
             <input
-            placeholder='Password...'
+              placeholder='Password...'
               type={passwordShown ? "text" : "password"}
               name="password"
               value={account.password}

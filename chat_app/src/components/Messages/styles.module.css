@@ -1,10 +1,8 @@
 .container{
-    width: 300px;
+    width: 280px;
     border-right: 2px solid gray;
     height: 90vh;
     position: absolute;
-    top: 60px;
-    left: 80px;
     overflow: hidden;
     background-color: var(--gray-bg);
     display: flex;
@@ -22,7 +20,7 @@
 }
 
 .Friends_container{
-    width: 300px;
+    width: 280px;
     height: auto;
     overflow: auto;
 }
@@ -57,8 +55,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
-
-    
 }
 .content label{
     color: var(--primary-color);

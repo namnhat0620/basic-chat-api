@@ -11,7 +11,8 @@ const Message = (props) => {
   const customStylesContentMessage = {
     fontWeight: friend.status? "bold" : "normal",
     display: "flex",
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
+    fontSize: "14px"
   }
 
 

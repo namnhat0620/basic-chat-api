@@ -1,15 +1,12 @@
 import React from 'react'
 
-
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Header from '../../components/Header/Header';
+import Logo from './../../assets/images/logo_main_color.png'
+import styles from './styles.module.css'
 
 const ChatApp = () =>{
     return (
-      <div>
-        
-        
-      </div>
+      <>
+      </>
     )
 }
 

@@ -1,10 +1,7 @@
 .container{
-    width: 300px;
-    border-right: 2px solid gray;
-    height: 90vh;
+    width: 280px;
+    height: 82vh;
     position: absolute;
-    top: 60px;
-    left: 80px;
     overflow: hidden;
     background-color: var(--gray-bg);
     display: flex;
@@ -12,7 +9,7 @@
 }
 
 .container h1{
-    padding: 20px 10px 10px 10px;
+    padding: 30px 10px 10px 10px;
     color: var(--main-color);
     font-weight: 500;
     font-size: large;
@@ -21,7 +18,7 @@
 }
 
 .list_container{
-    width: 300px;
+    width: 280px;
     height: auto;
     overflow: auto;
 }
@@ -66,11 +63,36 @@
     margin-right: 10px;
 }
 
+.actived_friend{
+    width: 13px;
+    height: 13px;
+    border-radius: 7px;
+    position: relative;
+    float: right;
+    bottom: -34px;
+    right: 25px;
+    float: right;
+    background-color: green;
+    border: 2px solid white;
+}
+
+.inactived_friend{
+    width: 13px;
+    height: 13px;
+    border-radius: 7px;
+    position: relative;
+    float: right;
+    bottom: -34px;
+    right: 25px;
+    float: right;
+    background-color: darkgray;
+    border: 2px solid white;
+}
 /*Request*/
 .requests_content{
     display: flex;
     justify-content: space-between;
-    width: 200px;
+    width: 200px;    
 }
 
 .button_container{

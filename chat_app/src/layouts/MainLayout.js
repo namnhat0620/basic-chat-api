@@ -2,6 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar/Sidebar";
 import Header from "../components/Header/Header";
+import UserInfo from "../components/Sidebar/UserInfo";
 
 const isAuthenticated = true;
 
@@ -16,6 +17,7 @@ if(!isAuthenticated){
       {/* SideBar */}
       <Header/>
       <Sidebar/>
+      <UserInfo/>
       <Outlet />
     </div>
     

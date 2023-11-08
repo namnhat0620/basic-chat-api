@@ -4,6 +4,8 @@ import Search from '../Search/Search'
 import styles from './styles.module.css'
 import RequestList from './RequestList'
 
+import getUserList from '../../api/account'
+
 const testData = [
   {
     id: 1,
@@ -66,6 +68,8 @@ const testData = [
 
 const AllFriends = (props) => {
   const [friends, setFriends] = useState(testData)
+  const [test, setTest] = useState(null)
+
   const [showAll, setShowAll] = useState(false)
     const handleShowAll = () => {
         setShowAll(!showAll)
@@ -75,13 +79,23 @@ const AllFriends = (props) => {
     backgroundColor:" red",
     width: "300px"
   }
+
+  useEffect(()=>{
+    /*fetch("https://qldapm.onrender.com")
+    .then(async (data) => {
+        if (data.ok) {
+            data = await data.json()
+            //Here you have your data...
+        }
+    }).catch(e => console.log('Connection error', e))*/
+  }, [])
   return (
-    <div className={styles.container}>
+    <>
       <Search/>
       {showAll?        
-        <>
-        
-            <h1>Active Friends</h1>
+       
+        <div className={styles.container}>
+        <h1>Active Friends</h1>
             <div className={styles.list_container}>
 
                 {friends.map((item, index)=>{
@@ -92,21 +106,24 @@ const AllFriends = (props) => {
             </div>
             <button onClick={handleShowAll} >See all Friends</button>
             <RequestList/>
-        </>:
+        </div>
+           
+       :
       
-        <>
-            <h1>All Friends</h1>
-            <div className={styles.list_container}>
+       <div className={styles.container}>
+       <h1>Active Friends</h1>
+           <div className={styles.list_container}>
 
-                {friends.map((item, index)=>{
-                    return ( 
-                    <Friend friend = {item}/>)
-                })}
-            </div>
-            <button onClick={handleShowAll}>Hide All Friends</button>
-        </>
+               {friends.map((item, index)=>{
+               return ( 
+                   <Friend friend = {item}/>)
+               })}
+           </div>
+           <button onClick={handleShowAll} >See all Friends</button>
+           
+       </div>
         }
-    </div>
+    </>
   )
 }
 

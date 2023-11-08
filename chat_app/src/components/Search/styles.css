@@ -1,7 +1,7 @@
 .search_container{
     padding: 18px 10px 10px 10px;
     background-color: white;
-    width: 300px;
+    width: 280px;
 }
 
 .search_container input{
@@ -9,7 +9,7 @@
     padding: 10px;
     border-radius: 8px;
     border: none;
-    width: 240px;
+    width: 220px;
     margin-right: 10px;
 }
 

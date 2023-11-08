@@ -76,30 +76,32 @@ const RequestList = (props) => {
   return (
     <>
         <h1>Friend Requests</h1>
-
+          <div className={styles.list_container}>
             {friends.map((friend, index)=>{
-            return ( 
-                <div className={styles.Friend_container}>
-                    <div className={styles.avatar_wrapper}>
+              return ( 
+                  <div className={styles.Friend_container}>
+                      <div className={styles.avatar_wrapper}>
 
-                        <img src={avatar} className={styles.avatar_message}></img>
-                        
-                    </div>       
+                          <img src={avatar} className={styles.avatar_message}></img>
+                          
+                      </div>       
 
-                    <div className={styles.requests_content}>
-                        <label>
-                            {friend.username}
-                        </label>
-                        <div className={styles.button_container}>
-                            
-                            <button><i id='accepted'>{acceptd}</i></button>
-                            <button><i id='denied'>{denied}</i></button>
-                        </div>
+                      <div className={styles.requests_content}>
+                          <label>
+                              {friend.username}
+                          </label>
+                          <div className={styles.button_container}>
+                              
+                              <button><i id='accepted'>{acceptd}</i></button>
+                              <button><i id='denied'>{denied}</i></button>
+                          </div>
 
-                    </div>
-                </div>
-                )
-            })}
+                      </div>
+                  </div>
+                  )
+              })}
+          </div>
+            
     </>
   )
 }
