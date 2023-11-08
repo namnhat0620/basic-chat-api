@@ -27,10 +27,10 @@ export class GetDetailUserResponse {
     avatar: string
 
     constructor(data?: GetDetailUserResponse) {
-        this.user_id = data?.user_id;
-        this.username = data?.username;
-        this.email = data?.email;
-        this.avatar = data?.avatar;
+        this.user_id = data?.user_id || 0;
+        this.username = data?.username || '';
+        this.email = data?.email || '';
+        this.avatar = data?.avatar || '';
     }
 }
 

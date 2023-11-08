@@ -47,8 +47,7 @@ export class GatewayService {
     //Gửi tin nhắn cho user trong room
     room.room_member.forEach(async roomMember => {
       const socketId: string = await this.cacheManager.get(`${USER_CONNECTION}:${roomMember.user_id}`);
-      socketId && client.to(socketId).emit(GatewayListenEnum.message_text, new MessageDetailResponse(message));
-      console.log({ userId: roomMember.user_id, socketId });
+      socketId && global._server.to(socketId).emit(GatewayListenEnum.message_text, new MessageDetailResponse(message));
     })
   }
 }

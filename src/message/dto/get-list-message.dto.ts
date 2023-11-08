@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { PaginationDto } from "src/utils/dto/pagination.dto";
+import { PaginationDto } from "../../utils/dto/pagination.dto";
 
 export class GetListMessageDto extends PaginationDto {
     @ApiProperty({

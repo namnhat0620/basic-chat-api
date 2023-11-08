@@ -1,9 +1,9 @@
 import { Controller, Get, HttpStatus, Param, Query, Res } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { GetDetailUserDto } from 'src/user/dto/get-detail.dto';
-import { SwaggerGetDetailUserResponse } from 'src/user/response/get-detail.response';
-import { BaseResponse } from 'src/utils/response/base.response';
+import { GetDetailUserDto } from '../user/dto/get-detail.dto';
+import { SwaggerGetDetailUserResponse } from '../user/response/get-detail.response';
+import { BaseResponse } from '../utils/response/base.response';
 import { GetListMessageDto } from './dto/get-list-message.dto';
 import { SwaggerMessageResponsePagination } from './response/message.response';
 

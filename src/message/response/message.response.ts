@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { GetChatRoomResponse } from "../../chat_room/response/get-list-chat_room.response";
+import { GetChatRoomDetailResponse } from "../../chat_room/response/get-list-chat_room.response";
 import { GetDetailUserResponse } from "../../user/response/get-detail.response";
 import { ApiProperty } from "@nestjs/swagger";
 import { PaginationResponse } from "../../utils/response/pagination.response";
@@ -32,9 +32,9 @@ export class MessageResponse {
     timestamp: string;
 
     constructor(data?: any) {
-        this.message_id = data?.message_id;
+        this.message_id = data?.message_id || 0;
         this.user = new GetDetailUserResponse(data?.user);
-        this.content = data?.content;
+        this.content = data?.content || '';
         this.timestamp = moment(data?.timestamp).format('DD/MM/YYYY HH:mm:ss');
     }
 

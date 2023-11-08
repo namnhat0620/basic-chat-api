@@ -7,12 +7,16 @@ import { GetListMessageDto } from './dto/get-list-message.dto';
 import { UserService } from '../user/user.service';
 import { ChatRoomService } from '../chat_room/chat_room.service';
 import { MessageResponse } from './response/message.response';
+import { ChatRoomEntity } from '../chat_room/entities/chat_room.entity';
 
 @Injectable()
 export class MessageService {
   constructor(
     @InjectRepository(MessageEntity)
     private readonly messageRepository: Repository<MessageEntity>,
+
+    @InjectRepository(ChatRoomEntity)
+    private readonly chatRoomRepository: Repository<ChatRoomEntity>,
 
     private readonly userService: UserService,
     private readonly chatRoomService: ChatRoomService
@@ -45,10 +49,14 @@ export class MessageService {
     return { limit, total_record, list: MessageResponse.mapToList(listMessages) }
   }
 
-  //==============SUPPORT FUNCTION
+  //==============SUPPORT FUNCTION===================//
   async createMessage(createMessageDto: CreateMessageDto): Promise<MessageEntity> {
+    //Tạo tin nhắn mới
     const message = this.messageRepository.create({ ...createMessageDto, timestamp: new Date() });
     await this.messageRepository.save(message);
+
+    //Cập nhật last_message
+    await this.chatRoomRepository.save({ ...createMessageDto.room, last_message: message });
     return message;
   }
 }

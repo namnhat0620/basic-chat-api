@@ -6,7 +6,7 @@ import { CreateChatRoomDto } from './dto/create-chat_room.dto';
 import { UserService } from '../user/user.service';
 import { RoomMemberEntity } from './entities/room_member.entity';
 import { PaginationDto } from '../utils/dto/pagination.dto';
-import { GetChatRoomResponse, GetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
+import { GetChatRoomDetailResponse, GetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
 
 @Injectable()
 export class ChatRoomService {
@@ -52,12 +52,12 @@ export class ChatRoomService {
     //Lấy ds room chat
     const [listRoomMember, total_record] = await this.roomMemberRepository.findAndCount({
       where: { user_id },
-      relations: { chat_room: true },
+      relations: { chat_room: { last_message: { user: true } } },
       take: limit,
       skip
     })
 
-    const list = listRoomMember.map(roomMember => new GetChatRoomResponse(roomMember.chat_room));
+    const list = listRoomMember.map(roomMember => new GetChatRoomDetailResponse(roomMember.chat_room));
     return { limit, total_record, list };
   }
 

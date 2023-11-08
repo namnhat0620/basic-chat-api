@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BaseResponse } from "../../utils/response/base.response";
 import { PaginationResponse } from "../../utils/response/pagination.response";
+import { MessageResponse } from "../../message/response/message.response";
 
-export class GetChatRoomResponse {
+export class GetChatRoomDetailResponse {
     @ApiProperty({
         type: Number
     })
@@ -18,23 +19,29 @@ export class GetChatRoomResponse {
     })
     avatar: string;
 
-    constructor(data?: GetChatRoomResponse) {
-        this.room_id = data?.room_id;
-        this.room_name = data?.room_name;
-        this.avatar = data?.avatar;
+    @ApiProperty({
+        type: MessageResponse
+    })
+    last_message: MessageResponse
+
+    constructor(data?: any) {
+        this.room_id = data?.room_id || 0;
+        this.room_name = data?.room_name || '';
+        this.avatar = data?.avatar || '';
+        this.last_message = new MessageResponse(data?.last_message)
     }
 
-    static mapToList(data?: GetChatRoomResponse[]) {
-        return data?.map(item => new GetChatRoomResponse(item)) || []
+    static mapToList(data?: GetChatRoomDetailResponse[]) {
+        return data?.map(item => new GetChatRoomDetailResponse(item)) || []
     }
 }
 
 export class GetListChatRoomResponsePagination extends PaginationResponse {
     @ApiProperty({
-        type: GetChatRoomResponse,
+        type: GetChatRoomDetailResponse,
         isArray: true
     })
-    list: GetChatRoomResponse[]
+    list: GetChatRoomDetailResponse[]
 }
 
 export class SwaggerGetListChatRoomResponsePagination extends BaseResponse {

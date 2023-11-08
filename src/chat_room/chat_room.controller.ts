@@ -36,8 +36,6 @@ export class ChatRoomController {
     @Query() getDetailDto: PaginationDto,
     @Res() res: any) {
     const data = await this.chatRoomService.getListChatRoom(+user_id, getDetailDto);
-    console.log({ data });
-
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 }

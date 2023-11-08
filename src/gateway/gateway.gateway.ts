@@ -11,8 +11,11 @@ import { GatewayEnum } from '../utils/enums/gateway.enum';
 })
 export class GatewayGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(private readonly gatewayService: GatewayService) { }
-  @WebSocketServer()
-  server: Server;
+  @WebSocketServer() server: Server;
+
+  afterInit(server: any): any {
+    global._server = this.server;
+  }
 
   async handleConnection(client: Socket, ...args: any[]) {
     await this.gatewayService.handleConnection(client);
