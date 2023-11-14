@@ -5,6 +5,7 @@ services:
     image: phatnguyen1812/qldapm:latest
     ports:
       - '3000:3000'
+    restart: always
 
   nginx:
     image: nginx
@@ -14,3 +15,4 @@ services:
       - "./nginx.conf:/etc/nginx/nginx.conf"
     depends_on:
       - app
+    restart: always
