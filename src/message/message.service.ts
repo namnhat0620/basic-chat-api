@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { CreateMessageDto as CreateMessageDtoByApi } from '../gateway/dto/create-message.dto'
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageEntity } from './entities/message.entity';
@@ -8,6 +9,7 @@ import { UserService } from '../user/user.service';
 import { ChatRoomService } from '../chat_room/chat_room.service';
 import { MessageResponse } from './response/message.response';
 import { ChatRoomEntity } from '../chat_room/entities/chat_room.entity';
+import { MessageDetailResponse } from '../gateway/response/message-detail.response';
 
 @Injectable()
 export class MessageService {
@@ -47,6 +49,18 @@ export class MessageService {
     })
 
     return { limit, total_record, list: MessageResponse.mapToList(listMessages) }
+  }
+
+  async createMessageByApi(user_id: number, createMessageDto: CreateMessageDtoByApi) {
+    const { room_id, content } = createMessageDto;
+
+    //Validate
+    const user = (await this.userService.checkUsers([user_id]))[0];
+    const room = await this.chatRoomService.getChatRoom(user_id, room_id);
+
+    //Create message
+    const message = await this.createMessage({ room, user, content });
+    return new MessageDetailResponse(message);
   }
 
   //==============SUPPORT FUNCTION===================//
