@@ -69,6 +69,7 @@ export class UserService {
         user_id: +user_ids[0],
         status: UserStatus.ACTIVE
       })
+
       if (user) return [user];
       else throw new HttpException('User không tồn tại hoặc đã bị khóa', HttpStatus.NOT_FOUND)
     } else {
