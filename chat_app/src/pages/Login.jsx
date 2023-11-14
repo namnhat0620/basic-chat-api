@@ -12,6 +12,7 @@ import AlertError from "../components/AlertError";
 import BySocial from "../components/BySocial";
 
 import APILogin from "../api/APILogin";
+import RegisterSuccess from "../components/Modals/RegisterSuccess";
 
 
 function Login() {
@@ -29,16 +30,15 @@ function Login() {
     const redirectPath = location.state?.path || '/'
 
     //register open   
-
     const [isRegister, setisRegister] = useState(false);
     const toggleOpen = () => setisRegister(!isRegister);
 
 
     //login success error?
     const [isSuccess, setSuccess] = useState(false);
-    const toggleError = () => setSuccess(!isSuccess);
+    const toggleSuccess = () => setSuccess(!isSuccess);
+
     const [errorMessage, setErrorMessage] = useState('')
-    const handleErrorMessage = (message) => setErrorMessage(message)
 
     const [passwordShown, setPasswordShown] = useState(false);
     
@@ -60,8 +60,8 @@ function Login() {
             navigate(redirectPath, {replace: true})           
         }
         else{
-            setSuccess(!isSuccess)
             setErrorMessage(res.message)
+            
         }
         
         
@@ -76,6 +76,7 @@ function Login() {
             </Col>           
     </Row>
         <Form onSubmit={handleSubmit}>
+        
             <Row style={{
                 justifyContent: "center",
                 backgroundColor: "white",
@@ -83,10 +84,10 @@ function Login() {
             }}
             className="text-center"
             >
+
                 <Col xs={6}>
                     
                     <h2 style={{color: "#1687A7"}} className="fw-bolder">Sign in</h2>
-
                     <FloatingLabel
                         label="Email or Phone Number..."
                         id="floatinglabel"
@@ -120,6 +121,7 @@ function Login() {
                         {errors && <p style={{color: "red", fontSize: '13px', marginLeft: '10px'}}>{errors.email}</p>}
                     </FloatingLabel>
 
+                    {!isSuccess && <div style={{color: "red", fontSize: '14px', margin: '0px 0px 10px 10px'}}>{errorMessage}</div>}
                     <Form.Group className="mb-2">
                         <Link  style={{color: "#1687A7", fontWeight: "700"}}>Forgot Password?</Link> 
                     </Form.Group>
@@ -141,9 +143,8 @@ function Login() {
 
                         <BySocial/>
                         
-                        <Register handleToggle={toggleOpen} show={isRegister}/>
-
-                        <AlertError handleToggle={toggleError} show={isSuccess} message={errorMessage}/>
+                        <Register handleToggle={toggleOpen} show={isRegister} setShow={setisRegister} isSuccess={isSuccess} setSuccess={setSuccess}/>
+                        <RegisterSuccess handleToggle={toggleSuccess} show={isSuccess}/>
                 </Col>
             </Row>
         </Form>

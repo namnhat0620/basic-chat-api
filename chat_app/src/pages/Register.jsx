@@ -1,7 +1,6 @@
 
 import { useState, useContext } from "react"
 import { useAuth } from "../context/AuthContext";
-import { useLocation, useNavigate } from "react-router-dom";
 import Validation from "./Validation";
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,9 +8,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from 'react-router-dom'
 import APIRegister from "../api/APIRegister";
 
-function Register({handleToggle, show}) {
+function Register({handleToggle, show, setShow, isSuccess, setSuccess}) {
     const auth = useAuth() //context
-    const navigate = useNavigate()
+
+    const toggleError = () => setSuccess(!isSuccess);
+    const [errorMessage, setErrorMessage] = useState('')
+
     const [user, setUser] = useState({
         email: "",
         username: "",
@@ -32,13 +34,13 @@ function Register({handleToggle, show}) {
         setErrors(Validation(user))   
 
         const res = await APIRegister(user)
-        
+        console.log(res)
         if(res.statusCode == 200){    
-            auth.login(res.data.user_id)
-            navigate(redirectPath, {replace: true})           
+            setShow(false)          
+            setSuccess(true) 
         }
         else{
-            setSuccess(!isSuccess)
+            setSuccess(false)
             setErrorMessage(res.message)
         }
         
@@ -60,6 +62,7 @@ function Register({handleToggle, show}) {
 
         <Modal.Body>
           <Form onSubmit={handleSignUp}>
+            {!isSuccess && <div style={{color: "red", fontSize: '14px', margin: '0px 0px 10px 10px'}}>{errorMessage}</div>}
             <Col>
                 <Form.Group  controlId="exampleForm.ControlInput1">
                     <Form.Label className="fw-bolder">Fullname</Form.Label>
@@ -133,7 +136,7 @@ function Register({handleToggle, show}) {
                
           </Form>  
         </Modal.Body>
-        
+           
       </Modal>
   )
 }
