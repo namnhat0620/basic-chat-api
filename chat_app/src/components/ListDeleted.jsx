@@ -1,8 +1,10 @@
 import React from 'react'
 
+//-tab4---thùng rác
+
 function ListDelete() {
     return (
-        <h1>Deleted Things here</h1>
+        <h2 className='mt-4'>Deleted</h2>
     )
 }
 

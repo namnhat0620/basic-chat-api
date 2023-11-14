@@ -6,8 +6,8 @@ import Avatar from './../assets/images/avatar.jpg'
 function Header() {
     return (
         <>
-        <Stack direction="horizontal" gap={3} className='fixed-top overflow-hidden' style={{backgroundColor: "#1687A7", color: "white", marginLeft: "70px"}}>
-            <div className="p-2">
+        <Stack direction="horizontal" gap={3} className='fixed-top overflow-hidden' style={{backgroundColor: "#1687A7", color: "white", marginLeft: "5%"}}>
+            <div className="p-2 m-2">
                 <Image src={Logo} style={{width: "40px", marginRight: "-20px"}}/>
             </div>
             <div className='p-2 h2'>CHAT APP</div>

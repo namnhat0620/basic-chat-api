@@ -4,16 +4,19 @@ import Image from "react-bootstrap/Image"
 import Validation from "./Validation";
 
 import Logo from './../assets/images/logo.png'
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useAuth } from "../context/AuthContext";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import Register from "./Register";
 import AlertError from "../components/AlertError";
 import BySocial from "../components/BySocial";
 
+import APILogin from "../api/APILogin";
+
 
 function Login() {
     const auth = useAuth() //context
+    //const [auth,setAuth] =useContext()
     const navigate = useNavigate()
     const [user, setUser] = useState({
         email: "",
@@ -24,8 +27,6 @@ function Login() {
     //path
     const location = useLocation()
     const redirectPath = location.state?.path || '/'
-
-
 
     //register open   
 
@@ -50,16 +51,23 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors(Validation(user))        
+        setErrors(Validation(user))   
 
-        const result = auth.login(user)
-        if(result){
-            navigate(redirectPath, {replace: true})
-        }   
-        else handleErrorMessage(result.message)    
+        const res = await APILogin(user)
+        
+        if(res.statusCode == 200){    
+            auth.login(res.data.user_id)
+            navigate(redirectPath, {replace: true})           
+        }
+        else{
+            setSuccess(!isSuccess)
+            setErrorMessage(res.message)
+        }
+        
+        
       };
   return (
-   <Container fluid={true} className="p-0 h-100" style={{backgroundColor: "#1687A7"}}>
+   <Container fluid={true} className="p-0 h-100 overflow-hidden" style={{backgroundColor: "#1687A7"}}>
     <Row className="text-center" style={{color: "white"}}>
             <Col style={{marginTop: '20px'}}>
                 <Image src={Logo} style={{height:'200px',width:'200px'}} fluid/>
@@ -69,19 +77,19 @@ function Login() {
     </Row>
         <Form onSubmit={handleSubmit}>
             <Row style={{
-                height: "60vh",
                 justifyContent: "center",
                 backgroundColor: "white",
-                paddingTop: "5%"
+                paddingTop: "2%"
             }}
             className="text-center"
             >
                 <Col xs={6}>
                     
                     <h2 style={{color: "#1687A7"}} className="fw-bolder">Sign in</h2>
+
                     <FloatingLabel
-                        id="floatingInput"
                         label="Email or Phone Number..."
+                        id="floatinglabel"
                         
                     >
                         <Form.Control 
@@ -90,24 +98,25 @@ function Login() {
                             name="email"
                             onChange={handleInputChange}
                             required
-                            className='rounded-pill'
+                            className='rounded-pill p-1'
                             />
-                        {errors && <div style={{color: "red", fontSize: '14px', margin: '0px 0px 10px 10px'}}>{errors.email}<br/>{errors.username}</div>}
+                        {errors && <div style={{color: "red", fontSize: '14px', margin: '0px 0px 10px 10px'}}>{errors.email}</div>}
                     </FloatingLabel>
+
                     <FloatingLabel
-                        id="floatingInput"
-                        label="Password..."
+                        
+                        id="floatinglabel"
+                        label="Password"
                     >
                         <Form.Control 
-                        type={passwordShown ? "text" : "password"}
-                        id="password"
-                        placeholder="Password..."
-                        name = "password"
-                        onChange={handleInputChange}
-                        required
-                        className='rounded-pill'
-                        />
-                        
+                            type={passwordShown ? "text" : "password"}
+                            id="password"
+                            placeholder="Password..."
+                            name = "password"
+                            onChange={handleInputChange}
+                            required
+                            className='rounded-pill'
+                        />                        
                         {errors && <p style={{color: "red", fontSize: '13px', marginLeft: '10px'}}>{errors.email}</p>}
                     </FloatingLabel>
 

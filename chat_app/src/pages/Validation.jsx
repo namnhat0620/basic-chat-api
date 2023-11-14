@@ -6,15 +6,15 @@ export default function Validation (values){
     const password_pattern = /(?=.*[^A-Za-z]).{8}/;
     const email_pattern = /\S+@\S+\.\S+/;
   
-    if (values.username === "") {
-      errors.username = "Username is Required";
-    }
-  
   
     if (values.email === "") {
       errors.email = "Email/Username is Required";
-    } else if (!email_pattern.test(values.email)){
+    }
+    if (!email_pattern.test(values.email)){
       errors.email = "Email is Invalid";
+    }
+    else  if (values.username === "") {
+      errors.username = "Username is Required";
     }
     /**check exist */
   
@@ -32,7 +32,7 @@ export default function Validation (values){
     }
 
     if(Object.keys(values).length > 3) {
-      if(!isNaN(values.phone) || values.phone.length !=10){
+      if(!isNaN(values.phone) && values.phone.length !=10){
         errors.phone = "Phone should be valid"
       }
       if(values.phone === ""){

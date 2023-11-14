@@ -1,6 +1,8 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 
+//thông báo lỗi khi đăng nhập
+
 function AlertError({handleToggle, show, message}) {
     return (
         <Modal

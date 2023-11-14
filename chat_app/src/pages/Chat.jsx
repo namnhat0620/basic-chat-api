@@ -5,6 +5,9 @@ import RouterApp from './../routes/RouteApp'
 import Header from '../components/Header'
 import { SideBar } from '../components/SideBar/SideBar'
 import ChatWindowDetail from '../components/ChatWindowDetail'
+import ChatWindow from '../components/Chat/ChatWindow'
+
+import {Container, Row, Col} from 'react-bootstrap'
 function Chat() {
   const auth = useAuth()
   const navigate = useNavigate()
@@ -15,8 +18,14 @@ function Chat() {
   }
   return (
    <>
-      <SideBar/>
-      <Header/>
+      <Container fluid={true} className="px-0 overflow-hidden">
+        <Row >
+          <Header/>
+          <Col xs={3} lg={3}><SideBar/></Col>
+          <Col xs={7}><ChatWindow/></Col>
+          <Col xs={2}><ChatWindowDetail/></Col>
+        </Row>
+    </Container>
    </>
    
     

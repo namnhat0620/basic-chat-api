@@ -12,34 +12,37 @@ import ListWaitingMessages from '../ListWaitingMessages';
 import Setting from '../Setting';
 
 import styles from './styles.css'
+import ChatWindow from '../Chat/ChatWindow';
 
 export const SideBar = () => {
   return (
     <>
     
-    <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-      <Row >
-        <Col sm={1}>
+    <Tab.Container id="left-tabs-example" defaultActiveKey="1" className=''>
+      <Row>
+        <Col sm={1} xs={1} md={1} style={{paddingRight: "0px"}}>
           <Nav variant="pills" className="flex-column jutify-content-between">
-            <Nav.Item className={styles.myClass}>
-              <Nav.Link eventKey="1" ><FontAwesomeIcon icon={faCommentAlt} style={{color: "#276678", fontSize: "24px"}}/></Nav.Link>
+
+            <Nav.Item className='m-2 px-2'>
+              <Nav.Link eventKey="1" ><FontAwesomeIcon icon={faCommentAlt} style={{color: "#276678", fontSize: "22px"}}/></Nav.Link>
             </Nav.Item >
-            <Nav.Item className='text-center py-4'>
-              <Nav.Link eventKey="2"><FontAwesomeIcon icon={faUserGroup} style={{color: "#276678", fontSize: "24px"}}/></Nav.Link>
+
+            <Nav.Item className='m-2 px-2'>
+              <Nav.Link eventKey="2"><FontAwesomeIcon icon={faUserGroup} style={{color: "#276678", fontSize: "22px"}}/></Nav.Link>
             </Nav.Item>
-            <Nav.Item className='text-center pb-4'>
-              <Nav.Link eventKey="3"><FontAwesomeIcon icon={faCommentDots}style={{color: "#276678", fontSize: "24px"}}/></Nav.Link>
+            <Nav.Item className='m-2 px-2'>
+              <Nav.Link eventKey="3"><FontAwesomeIcon icon={faCommentDots}style={{color: "#276678", fontSize: "22px"}}/></Nav.Link>
             </Nav.Item>
-            <Nav.Item className='text-center pb-4'>
-              <Nav.Link eventKey="4"><FontAwesomeIcon icon={faTrash} style={{color: "#276678", fontSize: "24px"}} /></Nav.Link>
+            <Nav.Item className='m-2 px-2'>
+              <Nav.Link eventKey="4"><FontAwesomeIcon icon={faTrash} style={{color: "#276678", fontSize: "22px"}} /></Nav.Link>
             </Nav.Item>
-            <Nav.Item className='text-center pb-4'>
-              <Nav.Link eventKey="5"><FontAwesomeIcon icon={faGear} style={{color: "#276678", fontSize: "24px"}}/></Nav.Link>
+            <Nav.Item className='m-2 px-2'>
+              <Nav.Link eventKey="5"><FontAwesomeIcon icon={faGear} style={{color: "#276678", fontSize: "22px"}}/></Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
 
-        <Col sm={2} className='mt-4'>
+        <Col sm={8} xs={8} md={8} style={{paddingLeft: "0px", marginLeft: '18%'}}>
           <Tab.Content>
             <Tab.Pane eventKey="1"><ListMessages/></Tab.Pane>
             <Tab.Pane eventKey="2"><ListFriends/></Tab.Pane>

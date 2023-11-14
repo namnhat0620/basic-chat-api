@@ -7,6 +7,7 @@ import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Link } from 'react-router-dom'
+import APIRegister from "../api/APIRegister";
 
 function Register({handleToggle, show}) {
     const auth = useAuth() //context
@@ -26,13 +27,19 @@ function Register({handleToggle, show}) {
         const value = {...user, [event.target.name]: event.target.value}
         setUser(value)    
     };
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
-        setErrors(Validation(user))        
-        console.log("errors", errors)
+        setErrors(Validation(user))   
 
-        if(auth.register(user)){   
-            handleToggle()
+        const res = await APIRegister(user)
+        
+        if(res.statusCode == 200){    
+            auth.login(res.data.user_id)
+            navigate(redirectPath, {replace: true})           
+        }
+        else{
+            setSuccess(!isSuccess)
+            setErrorMessage(res.message)
         }
         
     }
@@ -42,14 +49,13 @@ function Register({handleToggle, show}) {
     <Modal 
         show={show} 
         onHide={handleToggle} 
-        className={{backgroundColor: "red"}}
         centered
         aria-labelledby="example-custom-modal-styling-title-sm"
     >
 
 
         <Modal.Header closeButton className="px-4">
-          <Modal.Title className="ms-auto" style={{color: '#1687A7'}}>Create Account</Modal.Title>
+          <Modal.Title className="ms-auto border-0" style={{color: '#1687A7'}}>Create Account</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
