@@ -10,9 +10,7 @@ import ListMessages from '../ListMessages';
 import ListFriends from '../ListFriends'
 import ListWaitingMessages from '../ListWaitingMessages';
 import Setting from '../Setting';
-
-import styles from './styles.css'
-import ChatWindow from '../Chat/ChatWindow';
+import './styles.css'
 
 export const SideBar = () => {
   return (

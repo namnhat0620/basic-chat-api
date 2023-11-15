@@ -1,13 +1,15 @@
 //tạo chat room
 
-async function APICreateChatRoom(users) {
-  const payload = {
-    user_id: users,
-    name: " ",
-    avatar: " ",
-  }
+import { useAuth } from "../context/AuthContext"
 
-const body = JSON.stringify(payload)
+async function APICreateChatRoom({group}) {
+  const payload = {
+    user_id: group.user_id,
+    name: group.name,
+    avatar: ""
+  }
+const auth = useAuth()
+const body = JSON.stringify(group)
 const options = {
   headers: {
       'Accept': 'application/json',
@@ -18,7 +20,7 @@ const options = {
   mode: 'cors'        
 }
   
-const URL = "https://qldapm.onrender.com/chat-room/"+users[0]+"/create"
+const URL = "https://qldapm.onrender.com/chat-room/"+auth.user+"/create"
 return await fetch(URL, options).then(response => {
   return response.json();
 }).then(result => {

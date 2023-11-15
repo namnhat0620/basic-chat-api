@@ -13,11 +13,11 @@ async function APILogin(account) {
     const options = {
       headers: {
           'Accept': 'application/json',
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          
       },
       method: "POST",
-      body: body,
-      mode: 'cors'        
+      body: body,   
     }
       
     return await fetch('https://qldapm.onrender.com/user/sign-in', options).then(response => {

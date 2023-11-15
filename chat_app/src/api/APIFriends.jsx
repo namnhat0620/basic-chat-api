@@ -21,7 +21,7 @@ async function APIFriends(require) {
     return await fetch(API, options).then(response => {
     return response.json();
     }).then(result => {
-    return result.data.list
+    return result
     }).catch (error => {
     console.log(error)
     })

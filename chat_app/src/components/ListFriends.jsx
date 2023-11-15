@@ -3,8 +3,7 @@ import { Stack, Image, Row, Col, Tab, Nav, Form} from 'react-bootstrap'
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
-import ChatWindow from './Chat/ChatWindow'
+import { faCommentsDollar, faUser } from '@fortawesome/free-solid-svg-icons'
 import Search from './Search'
 import { useAuth } from '../context/AuthContext'
 import APIFriends from '../api/APIFriends'
@@ -28,8 +27,13 @@ function ListFriends() {
     }
     
     const fetchMesasage = () => {
-        const res = APIFriends(require)
-        console.log(res)
+        APIFriends(require)
+        .then(result => {
+            const data = result.data
+            console.log(data)
+            setList(data)
+        })
+        console.log('list',list)
     }
 
     useEffect(() => {
