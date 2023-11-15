@@ -1,67 +1,54 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Modal, Button, Form, Row, Col, InputGroup, Image } from 'react-bootstrap'
 
 import { useAuth } from '../../context/AuthContext'
 
 import UploadingImage from './../../assets/images/uploadimage.png'
 import APICreateChatRoom from '../../api/APICreateChatRoom'
+import APIFriends from '../../api/APIFriends'
+import APISearchFriend from '../../api/APISearchFriend'
 
-const testlistFriends = [
+const test = [
   {
+    username: 'vy02',
     user_id: 32,
-    username: 'vy02',
-    email:'vy02@gmail.com',
-    avatar: "",
   },
   {
-    user_id: 33,
     username: 'vy03',
-    email:'vy02@gmail.com',
-    avatar: "",
-  },
-  {
-    user_id: 34,
-    username: 'vy02',
-    email:'vy02@gmail.com',
-    avatar: "",
-  },
-  {
-    user_id: 35,
-    username: 'vy02',
-    email:'vy02@gmail.com',
-    avatar: "",
-  },
-  {
-    user_id: 36,
-    username: 'vy02',
-    email:'vy02@gmail.com',
-    avatar: "",
-  },
-  {
-    user_id: 37,
-    username: 'vy02',
-    email:'vy02@gmail.com',
-    avatar: "",
-  },
-  {
-    user_id: 38,
-    username: 'vy02',
-    email:'vy02@gmail.com',
-    avatar: "",
-  },
+    user_id: 33,
+  }
 ]
 export default function ModalCreateGroup({handleToggle, show}) {
-    const [list, seList] = useState(testlistFriends)
+    const [listfriend, setList] = useState(test)
     const [users, setUsers] = useState([])
     const [groupName, setName] =useState('')
-
+    const [introduces, setIntroduce] = useState([])
+    
     const [groupInfo, setGroupInfo] = useState({
       user_id: [31,32,33,35],
       name: '',
       avatar: ''
     })
+
     const auth = useAuth()
 
+    const fetchMesasage = () => {
+      APIFriends(3)
+      .then(result => {
+          const data = result.data
+          console.log('data', data)
+          setList(data.list)
+      })
+      console.log('list',listfriend)
+  }
+
+  const fetchSomepeople =  async () => {
+    
+  }
+
+  useEffect(() => {
+      fetchMesasage()
+  }, [])
     const handleCreateGroup = async (e) => {
       e.preventDefault()
 
@@ -84,7 +71,7 @@ export default function ModalCreateGroup({handleToggle, show}) {
       mode: 'cors'        
     }
       
-    const URL = "https://qldapm.onrender.com/chat-room/"+auth.user+"/create"
+    const URL = "https://chat-2865.onrender.com/chat-room/"+auth.user+"/create"
     return await fetch(URL, options).then(response => {
       return response.json();
     }).then(result => {
@@ -93,36 +80,26 @@ export default function ModalCreateGroup({handleToggle, show}) {
     }).catch (error => {
       console.log(error)
       
-    console.log("response", response)})
+      console.log("response", response)})
     }
 
-
-
-
-
-
     const handleInputChange = (event) =>{
-      setName(event.target.value)
-      console.log(groupName)
-       /* const target = event.target;
-        if(target.type==='input'){
-          
-        console.log('checked', target.checked)
-          //setInput(value)
-        }
-        else{
-          if(check){
-            
-        const check = target.checked
-        const value = target.name;
-            //setUsers([...users, value])
-          }
-          else{
-            //const updateUsers = users.filter(x=> x != value)
-            setUsers(updateUsers)
-          }
-          console.log(users)/
-      }*/
+      const target = event.target
+      const value = target.value
+      const check = target.checked
+      console.log(check, value)
+      if(check === true){
+        //add
+        
+        setUsers(users => [...users, value]);
+      }
+      else{
+        //remove
+        const temp = users.filter((user)=>String(user.user_id) != value)
+        setUsers(temp)
+        
+      }
+      console.log(users)
       
     }
 
@@ -141,7 +118,7 @@ export default function ModalCreateGroup({handleToggle, show}) {
 
           <InputGroup className="mb-1 mt-3">
           <Button variant="outline-secondary" id="button-addon1" className='rounded-pill text-center' style={{borderColor: '#1687A7', backgroundColor: "lightgray"}}>
-            <Image src={UploadingImage} width={15}/>
+            <Image src={UploadingImage} width={18}/>
           </Button>
           <Form.Control
             aria-label="Example text with button addon"
@@ -158,7 +135,7 @@ export default function ModalCreateGroup({handleToggle, show}) {
         <Modal.Body>
           <Form>
             <Form.Label className='mb-1 ps-4 fw-bolder'>Friend List:</Form.Label>
-            {list.map((user, index)=>(
+            {test.map((user, index)=>(
               <Form.Group as={Row} className="mb-1 ps-5">
 
                 <Form.Label column sm="7">
@@ -169,7 +146,7 @@ export default function ModalCreateGroup({handleToggle, show}) {
                   <Form.Check
                     type="checkbox" 
                     id={user.user_id}
-                    className='ps-5'
+                    className='ps-5 border-2 border-secondary'
                     onChange={handleInputChange}
                     value={user.user_id}
                     name={user.user_id}
@@ -181,12 +158,12 @@ export default function ModalCreateGroup({handleToggle, show}) {
           
         </Modal.Body>
         
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleToggle}>
-            Close
+        <Modal.Footer className='mx-4'>
+          <Button variant="secondary" onClick={handleToggle} style={{backgroundColor: '#D9D9D9', color: '#276678'}} className='rounded-pill border-0 px-4 fw-bold'>
+            Cancel
           </Button>
-          <Button variant="primary" onClick={handleCreateGroup}>
-            Save Changes
+          <Button variant="primary" onClick={handleCreateGroup} style={{backgroundColor: '#276678', color: 'white'}} className='rounded-pill px-4 text-center border-0 fw-bold'>
+            Create
           </Button>
         </Modal.Footer>
       </Modal>

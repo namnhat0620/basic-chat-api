@@ -20,7 +20,7 @@ const options = {
   mode: 'cors'        
 }
   
-const URL = "https://qldapm.onrender.com/chat-room/"+auth.user+"/create"
+const URL = "https://chat-2865.onrender.com/chat-room/"+auth.user+"/create"
 return await fetch(URL, options).then(response => {
   return response.json();
 }).then(result => {

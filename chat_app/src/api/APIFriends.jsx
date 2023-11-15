@@ -1,7 +1,9 @@
 //lấy danh sách bạn bè/lời mời kết bạn
 
-async function APIFriends(require) {
-  
+import { useAuth } from "../context/AuthContext"
+
+async function APIFriends(type) {
+    const auth= useAuth()
     const required = {
         user_id: require.user_id,
         page: 1,
@@ -15,7 +17,7 @@ async function APIFriends(require) {
         }        
     }
     
-    const API = 'https://qldapm.onrender.com/friend/'+require.user_id+'/list?page=1&limit=20&type='+required.type
+    const API = 'https://chat-2865.onrender.com/friend/'+auth.user+'/list?page=1&limit=20&type='+type
     console.log(API)
     
     return await fetch(API, options).then(response => {

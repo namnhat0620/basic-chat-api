@@ -4,7 +4,9 @@ import React from 'react'
 
 function Setting() {
     return (
-        <h1>Setting here</h1>
+        <div  style={{marginTop: '200px'}}>
+        <  h3 className='mt-4'>Setting</h3>
+        </div>
     )
 }
 

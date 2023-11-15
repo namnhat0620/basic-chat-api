@@ -7,7 +7,7 @@ async function APIAllChatRoom(user_id) {
             'accept': 'application/json'
         }        
     }
-    const API = 'https://qldapm.onrender.com/chat-room/'+user_id+'/list?page=1&limit=20'
+    const API = 'https://chat-2865.onrender.com/chat-room/'+user_id+'/list?page=1&limit=20'
     console.log(API)
     
     return await fetch(API, options).then(response => {

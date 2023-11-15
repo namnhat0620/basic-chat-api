@@ -16,7 +16,7 @@ async function APISendRequest(id) {
     body: body,     
     }
     
-    return await fetch('https://qldapm.onrender.com/friend/'+id+'/request', options)
+    return await fetch('https://chat-2865.onrender.com/friend/'+id+'/request', options)
     .then(response => {
     return response.json();
     }).then(result => {

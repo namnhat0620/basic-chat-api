@@ -4,7 +4,9 @@ import React from 'react'
 
 function ListDelete() {
     return (
-        <h2 className='mt-4'>Deleted</h2>
+        <div  style={{marginTop: '200px'}}>
+            <h3 className='mt-4'>Deleted things</h3>
+        </div>
     )
 }
 

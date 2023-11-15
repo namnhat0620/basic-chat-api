@@ -5,7 +5,9 @@ import React from 'react'
 
 function ChatWindowDetail() {
     return (
-        <h2 className='mt-4'>User Detail here</h2>
+        <div  style={{marginTop: '200px'}}>
+            <h3 className='mt-4'>Chat room's information</h3>
+        </div>
     )
 }
 

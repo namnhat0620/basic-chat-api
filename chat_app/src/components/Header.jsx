@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { Stack, Image, Dropdown, Button } from 'react-bootstrap'
+import { Stack, Image, Dropdown, Button, NavDropdown, Navbar, Container, Nav } from 'react-bootstrap'
 import Logo from './../assets/images/logo.png'
 import Avatar from './../assets/images/avatar.jpg'
 import { useAuth } from '../context/AuthContext'
@@ -14,23 +14,40 @@ function Header() {
     }
     return (
         <>
-        <Stack direction="horizontal" gap={3} className='fixed-top overflow-hidden d-flex justify-content-between' style={{backgroundColor: "#1687A7", color: "white", marginLeft: "5%"}}>
-            <div className=" m-2 d-flex align-items-center">
-                <Image src={Logo} width={40} height={40}/>
-                <div className='p-2 h2'>CHAT APP</div>
-            </div>
+    <Navbar variant="dark"  expand="lg" style={{backgroundColor: "#1687A7", marginLeft: "5%"}} className='fixed-top overflow-hidden d-flex justify-content-between p-0'>
+      <Container fluid>
+        
+        <Navbar.Brand href="#chatapp" className="d-flex align-items-center">
+        <Image src={Logo} width={40} height={40}/>
+                <div className='h2 ms-4'>CHAT APP</div>
+                
+        </Navbar.Brand>
 
-            <Dropdown className="" style={{marginRight:''}}>
-                <Dropdown.Toggle id="dropdown-basic" className='bg-transparent border-0'>
-                     <Image src={Avatar} roundedCircle   width={50} height={50} style={{ marginRight:'60px', backgroundColor: 'transparent'}}/>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-3" ><Button  style={{backgroundColor: 'transparent'}}  onClick={handleLogout}>Logout</Button></Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+        <Navbar.Collapse id="navbar-dark-example" className='d-flex flex-row-reverse'>
             
-         </Stack>
+      
+          <Nav>
+          <Navbar.Toggle aria-controls="navbar-dark-example"  data-toggle="dropdown"/>
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              menuVariant="dark"
+              title={
+                <Image src={Avatar} roundedCircle width={50} height={50} style={{ marginRight:'60px', backgroundColor: 'transparent'}}/>
+              }
+            >
+              <Navbar.Toggle aria-controls="navbar-dark-example"  data-toggle="dropdown"/>
+                
+              
+
+              <NavDropdown.Item  onClick={handleLogout}>
+                Logout
+              </NavDropdown.Item>
+
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
         <Outlet/>
         </>
     )

@@ -40,7 +40,7 @@ export const SideBar = () => {
           </Nav>
         </Col>
 
-        <Col sm={8} xs={8} md={8} style={{paddingLeft: "0px", marginLeft: '18%'}}>
+        <Col sm={8} xs={9} md={8} style={{paddingLeft: "0px", marginLeft: '18%'}} >
           <Tab.Content>
             <Tab.Pane eventKey="1"><ListMessages/></Tab.Pane>
             <Tab.Pane eventKey="2"><ListFriends/></Tab.Pane>

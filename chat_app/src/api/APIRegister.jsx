@@ -19,7 +19,7 @@ const options = {
   mode: 'cors'        
 }
   
-return await fetch('https://qldapm.onrender.com/user/create', options).then(response => {
+return await fetch('https://chat-2865.onrender.com/user/create', options).then(response => {
   return response.json();
 }).then(result => {
   console.log("result", result)

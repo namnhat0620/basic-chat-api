@@ -14,6 +14,7 @@ function Register({handleToggle, show, setShow, isSuccess, setSuccess}) {
     const toggleError = () => setSuccess(!isSuccess);
     const [errorMessage, setErrorMessage] = useState('')
 
+    const [passwordShown, setPasswordShown] = useState(false);
     const [user, setUser] = useState({
         email: "",
         username: "",
@@ -81,7 +82,14 @@ function Register({handleToggle, show, setShow, isSuccess, setSuccess}) {
                 </Form.Group>
                 <Form.Group className="" controlId="exampleForm.ControlTextarea1">
                     <Form.Label className="fw-bolder">Password:</Form.Label>
-                    <Form.Control type="text" name="password" onChange={handleInputChange}  rows={1} size="sm" className='rounded-pill' required/>
+                    <Form.Control 
+                        type={passwordShown ? "text" : "password"}                         
+                        name = "password"
+                        onChange={handleInputChange}  
+                        rows={1} 
+                        size="sm" 
+                        className='rounded-pill' 
+                        required/>
                     {errors && <div style={{color: "red", fontSize: '14px', margin: '0px 0px 10px 10px'}}>{errors.password}</div>}
                 </Form.Group>
                 <Form.Group  controlId="exampleForm.ControlTextarea1">

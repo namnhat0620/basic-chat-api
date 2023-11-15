@@ -1,4 +1,4 @@
-const API = 'https://qldapm.onrender.com'
+const API = 'https://chat-2865.onrender.com'
 
 /**post */
 //export const SIGNIN_URL = API + '/user/sign-in' //sign-in url

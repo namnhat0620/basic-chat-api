@@ -1,4 +1,4 @@
-import { Button, Form, Row, Col, Container, FloatingLabel} from "react-bootstrap"
+import { Button, Form, Row, Col, Container, FloatingLabel, InputGroup} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Image from "react-bootstrap/Image"
 import Validation from "./Validation";
@@ -85,26 +85,26 @@ function Login() {
             className="text-center"
             >
 
-                <Col xs={6}>
+                <Col xs={5} className="d-flex flex-column">
                     
                     <h2 style={{color: "#1687A7"}} className="fw-bolder">Sign in</h2>
-                    <FloatingLabel
-                        label="Email or Phone Number..."
-                        id="floatinglabel"
-                        
+                    <InputGroup
+                        controlId="floatingTextarea"
+                        label="Comments"
+                        className="mt-3"
                     >
-                        <Form.Control 
+                        <Form.Control
                             type="text" 
                             placeholder="Email or Phone Number..."
                             name="email"
                             onChange={handleInputChange}
                             required
-                            className='rounded-pill p-1'
+                            className='rounded-pill ps-4 border-1 border-secondary'
                             />
-                        {errors && <div style={{color: "red", fontSize: '14px', margin: '0px 0px 10px 10px'}}>{errors.email}</div>}
-                    </FloatingLabel>
-
-                    <FloatingLabel
+                        
+                    </InputGroup>
+                    {errors && <div style={{color: "red", fontSize: '14px'}} className="mb-4">{errors.email}</div>}
+                    <InputGroup
                         
                         id="floatinglabel"
                         label="Password"
@@ -116,10 +116,10 @@ function Login() {
                             name = "password"
                             onChange={handleInputChange}
                             required
-                            className='rounded-pill'
+                            className='rounded-pill ps-4 border-1 border-secondary'
                         />                        
-                        {errors && <p style={{color: "red", fontSize: '13px', marginLeft: '10px'}}>{errors.email}</p>}
-                    </FloatingLabel>
+                        {errors && <p style={{color: "red", fontSize: '13px', marginLeft: '10px'}}>{errors.password}</p>}
+                    </InputGroup>
 
                     {!isSuccess && <div style={{color: "red", fontSize: '14px', margin: '0px 0px 10px 10px'}}>{errorMessage}</div>}
                     <Form.Group className="mb-2">
@@ -133,15 +133,13 @@ function Login() {
                         </Button>
                     </Form.Group>
 
-                    <Form.Group  controlId="exampleForm.ControlTextarea1" className="fw-bold fs-7 ms-auto">
+                    <Form.Group  controlId="exampleForm.ControlTextarea1" className="fw-bold fs-7 ">
                         <Form.Label className="fw-bold">Not registered?     
                             <Link onClick={toggleOpen} style={{color: "#1687A7", fontWeight: "700"}}> Signup</Link>
                         </Form.Label>
                     </Form.Group>
 
                         
-
-                        <BySocial/>
                         
                         <Register handleToggle={toggleOpen} show={isRegister} setShow={setisRegister} isSuccess={isSuccess} setSuccess={setSuccess}/>
                         <RegisterSuccess handleToggle={toggleSuccess} show={isSuccess}/>

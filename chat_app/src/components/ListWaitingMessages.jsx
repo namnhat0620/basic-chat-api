@@ -3,7 +3,9 @@ import React from 'react'
 //tab3 - tất cả tin nhắn chờ
 function ListWaitingMessages() {
     return (
-        <h2 className='mt-4'>Waiting messages here</h2>
+        <div  style={{marginTop: '200px'}}>
+            <h3 className='mt-4'>Waiting Messages Here</h3>
+        </div>
     )
 }
 

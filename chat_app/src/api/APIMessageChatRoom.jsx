@@ -11,7 +11,7 @@ async function APIMesasgeChatRoom(require) {
         room_id: require.room
 
     }
-    const API = 'https://qldapm.onrender.com/message/'+auth.user+'/list?page=1&limit=20&room_id='+auth.room
+    const API = 'https://chat-2865.onrender.com/message/'+auth.user+'/list?page=1&limit=20&room_id='+auth.room
     console.log(API)
     
     return await fetch(API).then(response => {

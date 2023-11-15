@@ -10,34 +10,12 @@ import APIFriends from '../api/APIFriends'
 import APICreateChatRoom from '../api/APICreateChatRoom'
 
 //tất cả lời mời kết bạn -
-const listresquest = [
-    //test design
-    {
-        user_id: 31,
-       username: "namnhat",
-       email: "namnhat@gmail.com",
-       avatar: "namnhat.png"
-    },
-    {
-        user_id: 2,
-       username: "namnhat",
-       email: "namnhat@gmail.com",
-       avatar: "namnhat.png"
-    },
-    {
-        user_id: 3,
-       username: "namnhat",
-       email: "namnhat@gmail.com",
-       avatar: "namnhat.png"
-    },
 
-]
 function ListRequested() {
     const auth = useAuth()
     const [isAvatar, setAvatar] = useState(false)
     const [list, setList] = useState([])
 
-    const [temp, setTemp] = useState(listresquest)
     const [createChat, setCreate] = useState([auth.user])
 
     const handleAccept = (id) => {
@@ -49,12 +27,13 @@ function ListRequested() {
     }
 
     const fetchRequested = async () => {
-        const require = {
-            user_id: auth.user,
-            type: "3"
-        }
-        const res = APIFriends(require)
-        console.log(res)
+        const res = APIFriends(1)
+        .then(result => {
+            const data = result.data
+            console.log('data', data)
+            setList(data.list)
+        })
+        console.log('list',list)
     }
 
     useEffect(() => {
@@ -70,7 +49,7 @@ function ListRequested() {
                 
                 <Form.Label htmlFor="basic-url" style={{color: "#1A4C5B"}} className='mt-2 border-bottom'>All requested</Form.Label>
                 <Nav  className="bottom-top">
-                    {temp.map((user, index)=>(
+                    {list.map((user, index)=>(
                         <Nav.Item className=''  >
                             <Nav.Link eventKey="1" className='d-flex' style={{paddingLeft: "0px",}} >
                             <Col xs={3}>     

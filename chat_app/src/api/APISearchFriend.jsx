@@ -9,7 +9,7 @@ async function APISearchFriend(keyword) {
     }
 
     
-    const API = 'https://qldapm.onrender.com/user/detail?'+ keyword +'&username=' + keyword
+    const API = 'https://chat-2865.onrender.com/user/detail?'+ keyword +'&username=' + keyword
     
     
     

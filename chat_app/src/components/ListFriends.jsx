@@ -30,8 +30,8 @@ function ListFriends() {
         APIFriends(require)
         .then(result => {
             const data = result.data
-            console.log(data)
-            setList(data)
+            console.log('data', data)
+            setList(data.list)
         })
         console.log('list',list)
     }
