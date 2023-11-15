@@ -16,7 +16,7 @@ function Header() {
         <>
     <Navbar variant="dark"  expand="lg" style={{backgroundColor: "#1687A7", marginLeft: "5%"}} className='fixed-top overflow-hidden d-flex justify-content-between p-0'>
       <Container fluid>
-        
+      <Navbar.Toggle aria-controls="navbar-dark-example" />
         <Navbar.Brand href="#chatapp" className="d-flex align-items-center">
         <Image src={Logo} width={40} height={40}/>
                 <div className='h2 ms-4'>CHAT APP</div>
@@ -27,16 +27,17 @@ function Header() {
             
       
           <Nav>
-          <Navbar.Toggle aria-controls="navbar-dark-example"  data-toggle="dropdown"/>
+          <Navbar.Toggle aria-controls="navbar-dark-example" />
             <NavDropdown
               id="nav-dropdown-dark-example"
               menuVariant="dark"
+              onClick={handleLogout}
               title={
-                <Image src={Avatar} roundedCircle width={50} height={50} style={{ marginRight:'60px', backgroundColor: 'transparent'}}/>
+                <Image src={Avatar} roundedCircle width={50} height={50} style={{ marginRight:'100px', backgroundColor: 'transparent'}}
+                />
               }
             >
-              <Navbar.Toggle aria-controls="navbar-dark-example"  data-toggle="dropdown"/>
-                
+                            
               
 
               <NavDropdown.Item  onClick={handleLogout}>

@@ -98,6 +98,7 @@ function Login() {
                             placeholder="Email or Phone Number..."
                             name="email"
                             onChange={handleInputChange}
+                            value={user.email}
                             required
                             className='rounded-pill ps-4 border-1 border-secondary'
                             />
@@ -114,6 +115,7 @@ function Login() {
                             id="password"
                             placeholder="Password..."
                             name = "password"
+                            value={user.password}
                             onChange={handleInputChange}
                             required
                             className='rounded-pill ps-4 border-1 border-secondary'
