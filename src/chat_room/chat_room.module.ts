@@ -6,9 +6,11 @@ import { ChatRoomEntity } from './entities/chat_room.entity';
 import { UserService } from '../user/user.service';
 import { UserEntity } from '../user/entities/user.entity';
 import { RoomMemberEntity } from './entities/room_member.entity';
+import { FriendEntity } from '../friend/entities/friend.entity';
+import { FriendRequestEntity } from '../friend/entities/friend-request.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, ChatRoomEntity, RoomMemberEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity, FriendEntity, FriendRequestEntity, ChatRoomEntity, RoomMemberEntity])],
   controllers: [ChatRoomController],
   providers: [ChatRoomService, UserService],
 })

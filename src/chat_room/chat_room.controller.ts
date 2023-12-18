@@ -5,6 +5,8 @@ import { BaseResponse } from '../utils/response/base.response';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PaginationDto } from '../utils/dto/pagination.dto';
 import { SwaggerGetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
+import { AddMemberDto } from './dto/add_member.dto';
+import { LeaveChatRoomDto } from './dto/leave-chat_room.dto';
 
 @Controller('chat-room')
 @ApiTags('ChatRoom')
@@ -36,6 +38,34 @@ export class ChatRoomController {
     @Query() getDetailDto: PaginationDto,
     @Res() res: any) {
     const data = await this.chatRoomService.getListChatRoom(+user_id, getDetailDto);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
+
+  @Post(':user_id/add_member')
+  @ApiOperation({ summary: 'Thêm thành viên vào nhóm chat' })
+  @ApiResponse({
+    type: BaseResponse,
+    status: HttpStatus.OK
+  })
+  async addMemberChatRoom(
+    @Param('user_id') user_id: string,
+    @Body() addMemberDto: AddMemberDto,
+    @Res() res: any) {
+    const data = await this.chatRoomService.addMemberChatRoom(+user_id, addMemberDto);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
+
+  @Post(':user_id/leave_room')
+  @ApiOperation({ summary: 'Rời nhóm chat' })
+  @ApiResponse({
+    type: BaseResponse,
+    status: HttpStatus.OK
+  })
+  async leaveChatRoom(
+    @Param('user_id') user_id: string,
+    @Body() leaveChatRoomDto: LeaveChatRoomDto,
+    @Res() res: any) {
+    const data = await this.chatRoomService.leaveChatRoom(+user_id, leaveChatRoomDto.room_id);
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 }

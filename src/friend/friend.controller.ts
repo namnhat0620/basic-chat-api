@@ -25,6 +25,20 @@ export class FriendController {
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 
+  @Post(':user_id/accept')
+  @ApiOperation({ summary: 'Chấp nhận lời mời kết bạn' })
+  @ApiResponse({
+    type: BaseResponse,
+    status: HttpStatus.OK
+  })
+  async acceptFriend(
+    @Param('user_id') user_id_accept: string,
+    @Body() createFriendDto: RequestFriendDto,
+    @Res() res: any) {
+    const data = await this.friendService.requestFriend(user_id_accept, createFriendDto);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
+
   @Get(':user_id/list')
   @ApiOperation({ summary: 'Lấy ds bạn bè/lời mời kết bạn' })
   @ApiResponse({

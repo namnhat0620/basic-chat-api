@@ -10,10 +10,13 @@ import { RoomMemberEntity } from '../chat_room/entities/room_member.entity';
 import { CacheModule } from '@nestjs/cache-manager';
 import { MessageEntity } from '../message/entities/message.entity';
 import { MessageService } from '../message/message.service';
+import { FriendEntity } from '../friend/entities/friend.entity';
+import { FriendRequestEntity } from '../friend/entities/friend-request.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, ChatRoomEntity, RoomMemberEntity, MessageEntity]),
+    TypeOrmModule.forFeature([UserEntity, ChatRoomEntity, RoomMemberEntity, MessageEntity,
+      FriendEntity, FriendRequestEntity]),
     CacheModule.register(),
   ],
   providers: [GatewayGateway, GatewayService, UserService, ChatRoomService, MessageService],

@@ -8,12 +8,21 @@ import { SignInResponse } from './response/sign-in.response';
 import { UserStatus } from '../utils/enums/user.enum';
 import { GetDetailUserDto } from './dto/get-detail.dto';
 import { GetDetailUserResponse } from './response/get-detail.response';
+import { BlockUserDto } from './dto/block-user.dto';
+import { FriendEntity } from '../friend/entities/friend.entity';
+import { FriendRequestEntity } from '../friend/entities/friend-request.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
+
+    @InjectRepository(FriendEntity)
+    private friendRepository: Repository<FriendEntity>,
+
+    @InjectRepository(FriendRequestEntity)
+    private friendRequestRepository: Repository<FriendRequestEntity>,
   ) { }
   async create(createUserDto: CreateUserDto) {
     const { avatar, username, email, password } = createUserDto
@@ -23,6 +32,20 @@ export class UserService {
 
     //Save to db
     const newUser = this.userRepository.create({ avatar, username, email, password, status: UserStatus.ACTIVE })
+    await this.userRepository.save(newUser)
+  }
+
+  async update(user_id: number, createUserDto: CreateUserDto) {
+    const { avatar, username, email, password } = createUserDto
+    //Kiểm tra user tồn tại
+    await this.checkUsers([user_id])
+
+    //Kiểm tra username/email đã được dùng để đk trước đó chưa
+    const user = await this.userRepository.findOneBy([{ username }, { email }]);
+    if (user) throw new HttpException('Username/Email đã tồn tại', HttpStatus.BAD_REQUEST)
+
+    //Save to db
+    const newUser = this.userRepository.create({ user_id, avatar, username, email, password, status: UserStatus.ACTIVE })
     await this.userRepository.save(newUser)
   }
 
@@ -60,6 +83,36 @@ export class UserService {
     if (!user) throw new HttpException('Không tìm thấy user', HttpStatus.NOT_FOUND);
     return new GetDetailUserResponse(user)
   }
+
+  // async blockUser(user_id: number, blockUserDto: BlockUserDto) {
+  //   const { user_id_block, report } = blockUserDto
+
+  //   //Kiểm tra user hợp lệ
+  //   this.checkUsers([user_id, user_id_block])
+
+  //   //Block
+
+
+  //   //Xóa bạn
+  //   await this.friendRepository.delete({
+  //     user_id1: user_id,
+  //     user_id2: user_id_block
+  //   })
+  //   await this.friendRepository.delete({
+  //     user_id1: user_id_block,
+  //     user_id2: user_id
+  //   })
+
+  //   //Xóa lời mời kết bạn
+  //   await this.friendRequestRepository.delete({
+  //     user_id_recipient: user_id,
+  //     user_id_sender: user_id_block
+  //   })
+  //   await this.friendRequestRepository.delete({
+  //     user_id_recipient: user_id_block,
+  //     user_id_sender: user_id
+  //   })
+  // }
 
 
   //============SUPPORT FUNCTION=================//

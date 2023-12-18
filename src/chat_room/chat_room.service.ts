@@ -7,6 +7,7 @@ import { UserService } from '../user/user.service';
 import { RoomMemberEntity } from './entities/room_member.entity';
 import { PaginationDto } from '../utils/dto/pagination.dto';
 import { GetChatRoomDetailResponse, GetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
+import { AddMemberDto } from './dto/add_member.dto';
 
 @Injectable()
 export class ChatRoomService {
@@ -61,6 +62,42 @@ export class ChatRoomService {
     return { limit, total_record, list };
   }
 
+  async addMemberChatRoom(user_id: number, addMemberDto: AddMemberDto) {
+    const { user_id_add, room_id } = addMemberDto
+
+    //Check user valid
+    await this.userService.checkUsers([user_id, user_id_add])
+
+    //Check if user is in room 
+    await this.getChatRoom(user_id, room_id)
+
+    const userToAddInRoom = await this.roomMemberRepository.findOneBy({
+      room_id,
+      user_id: user_id_add
+    })
+    if (userToAddInRoom) throw new HttpException('Người dùng này đã là thành viên nhóm chat', HttpStatus.BAD_REQUEST)
+
+    //Thêm user vào nhóm chat
+    const newUserInRoom = this.roomMemberRepository.create({
+      room_id,
+      user_id: user_id_add
+    })
+    await this.roomMemberRepository.save(newUserInRoom)
+  }
+
+  async leaveChatRoom(user_id: number, room_id: number) {
+    //Check user valid
+    await this.userService.checkUsers([user_id])
+
+    //Check if user in room
+    await this.getChatRoom(user_id, room_id)
+
+    //Leave
+    await this.roomMemberRepository.delete({
+      user_id,
+      room_id
+    })
+  }
   //============SUPPORT FUNCTION=================//
 
   /*

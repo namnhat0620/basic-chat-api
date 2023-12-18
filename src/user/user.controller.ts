@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Query, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BaseResponse } from '../utils/response/base.response';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -7,6 +7,7 @@ import { SwaggerSignInResponse } from './response/sign-in.response';
 import { UserService } from './user.service';
 import { GetDetailUserDto } from './dto/get-detail.dto';
 import { SwaggerGetDetailUserResponse } from './response/get-detail.response';
+import { BlockUserDto } from './dto/block-user.dto';
 
 @Controller('user')
 @ApiTags('User')
@@ -21,6 +22,17 @@ export class UserController {
   })
   async create(@Body() createUserDto: CreateUserDto, @Res() res: any) {
     const data = await this.userService.create(createUserDto);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
+
+  @Post(':user_id/update')
+  @ApiOperation({ summary: 'Cập nhật thông tin user', })
+  @ApiResponse({
+    type: BaseResponse,
+    status: HttpStatus.OK
+  })
+  async update(@Param('user_id') user_id: string, @Body() createUserDto: CreateUserDto, @Res() res: any) {
+    const data = await this.userService.update(+user_id, createUserDto);
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 
@@ -45,4 +57,15 @@ export class UserController {
     const data = await this.userService.getDetailUser(getDetailDto);
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
+
+  // @Post(':user_id/block')
+  // @ApiOperation({ summary: 'Block user', })
+  // @ApiResponse({
+  //   type: BaseResponse,
+  //   status: HttpStatus.OK
+  // })
+  // async blockUser(@Param('user_id') user_id: string, @Body() blockUserDto: BlockUserDto, @Res() res: any) {
+  //   const data = await this.userService.blockUser(+user_id, blockUserDto);
+  //   return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  // }
 }
