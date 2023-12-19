@@ -3,8 +3,8 @@ import { ApiProperty } from "@nestjs/swagger";
 export class RequestFriendDto {
     @ApiProperty({
         type: Number,
-        description: 'Id của user đã gửi lời mời kết bạn',
+        description: 'Id của user cần gửi lời mời kết bạn',
         example: 1
     })
-    user_id_sender: number
+    user_id: number
 }

@@ -6,10 +6,11 @@ import { GetDetailUserResponse } from '../user/response/get-detail.response';
 import { UserService } from '../user/user.service';
 import { ListRequestFriendEnum } from '../utils/enums/friend.enum';
 import { GetListRequestFriendDto } from './dto/get-list-request-friend.dto';
-import { RequestFriendDto } from './dto/request-friend.dto';
+import { AcceptFriendDto } from './dto/accept-friend.dto';
 import { FriendRequestEntity } from './entities/friend-request.entity';
 import { FriendEntity } from './entities/friend.entity';
 import { GetListRequestFriendResponse } from './response/get-list-request-friend.response';
+import { RequestFriendDto } from './dto/request-friend.dto';
 
 @Injectable()
 export class FriendService {
@@ -23,8 +24,46 @@ export class FriendService {
     private readonly userService: UserService,
   ) { }
 
-  async requestFriend(user_id_accept: string, requestFriendDto: RequestFriendDto) {
-    const { user_id_sender } = requestFriendDto
+  async requestFriend(user_id_sender: string, requestFriendDto: RequestFriendDto) {
+    const { user_id } = requestFriendDto
+
+    //Kiểm tra tài khoản hợp lệ
+    await this.userService.checkUsers([user_id, +user_id_sender]);
+
+    //Kiểm tra nếu user_receive đã gửi lời mời kết bạn trước đó
+    const request = await this.friendRequestRepository.findOneBy({
+      user_id_recipient: +user_id_sender,
+      user_id_sender: +user_id
+    }
+    );
+
+    if (!request) {
+      //Kiểm tra 2 user đã là bạn bè
+      const friend = await this.friendRepository.findOneBy([
+        { user_id1: +user_id, user_id2: +user_id_sender },
+        { user_id1: +user_id_sender, user_id2: +user_id }
+      ])
+      if (!friend) {
+        //Tạo lời mời kết bạn
+        const newRequest = this.friendRequestRepository.create({
+          user_id_recipient: user_id,
+          user_id_sender: +user_id_sender
+        })
+        await this.friendRequestRepository.save(newRequest);
+      }
+    } else {
+      //Lời mời kết bạn 2 chiều => trở thành bạn bè
+      await this.friendRequestRepository.delete(request);
+      const newFriend = this.friendRepository.create({
+        user_id1: +user_id_sender,
+        user_id2: +user_id
+      })
+      await this.friendRepository.save(newFriend)
+    }
+  }
+
+  async acceptFriend(user_id_accept: string, acceptFriendDto: AcceptFriendDto) {
+    const { user_id_sender } = acceptFriendDto
 
     //Kiểm tra tài khoản hợp lệ
     await this.userService.checkUsers([user_id_sender, +user_id_accept]);
@@ -51,31 +90,6 @@ export class FriendService {
       })
     }
     else throw new HttpException('User chưa gửi lời mời kết bạn', HttpStatus.NOT_FOUND)
-
-
-    // if (!request) {
-    //   //Kiểm tra 2 user đã là bạn bè
-    //   const friend = await this.friendRepository.findOneBy([
-    //     { user_id1: +user_id_sender, user_id2: +user_id_accept },
-    //     { user_id1: +user_id_accept, user_id2: +user_id_sender }
-    //   ])
-    //   if (!friend) {
-    //     //Tạo lời mời kết bạn
-    //     const newRequest = this.friendRequestRepository.create({
-    //       user_id_recipient: user_id_sender,
-    //       user_id_sender: +user_id_accept
-    //     })
-    //     await this.friendRequestRepository.save(newRequest);
-    //   }
-    // } else {
-    //   //Lời mời kết bạn 2 chiều => trở thành bạn bè
-    //   await this.friendRequestRepository.delete(request);
-    //   const newFriend = this.friendRepository.create({
-    //     user_id1: +user_id_accept,
-    //     user_id2: +user_id_sender
-    //   })
-    //   await this.friendRepository.save(newFriend)
-    // }
   }
 
   async getListRequestFriend(user_id: string, getListRequestFriendDto: GetListRequestFriendDto) {
