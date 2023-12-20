@@ -7,4 +7,13 @@ export class AcceptFriendDto {
         example: 1
     })
     user_id_sender: number
+
+    @ApiProperty({
+        type: Number,
+        description: `
+        0: Deny
+        1: Accept`,
+        example: 1
+    })
+    type: number
 }

@@ -43,7 +43,6 @@ export class FriendService {
         { user_id1: +user_id, user_id2: +user_id_sender },
         { user_id1: +user_id_sender, user_id2: +user_id }
       ])
-      console.log({ user_id, user_id_sender, friend });
 
       if (!friend) {
         //Tạo lời mời kết bạn
@@ -66,7 +65,7 @@ export class FriendService {
   }
 
   async acceptFriend(user_id_accept: string, acceptFriendDto: AcceptFriendDto) {
-    const { user_id_sender } = acceptFriendDto
+    const { user_id_sender, type } = acceptFriendDto
 
     //Kiểm tra tài khoản hợp lệ
     await this.userService.checkUsers([user_id_sender, +user_id_accept]);
@@ -80,11 +79,13 @@ export class FriendService {
 
     if (request) {
       //Tạo bạn bè
-      const newFriend = this.friendRepository.create({
-        user_id1: +user_id_accept,
-        user_id2: +user_id_sender
-      })
-      await this.friendRepository.save(newFriend)
+      if (type == 1) {
+        const newFriend = this.friendRepository.create({
+          user_id1: +user_id_accept,
+          user_id2: +user_id_sender
+        })
+        await this.friendRepository.save(newFriend)
+      }
 
       //Xóa lời mời kết bạn
       this.friendRequestRepository.delete({
