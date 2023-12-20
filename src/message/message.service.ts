@@ -40,7 +40,6 @@ export class MessageService {
     const [listMessages, total_record] = await this.messageRepository.findAndCount({
       where: {
         room: { room_id },
-        user: { user_id }
       },
       relations: { user: true },
       order: { message_id: 'DESC' },

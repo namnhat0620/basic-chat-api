@@ -43,6 +43,8 @@ export class FriendService {
         { user_id1: +user_id, user_id2: +user_id_sender },
         { user_id1: +user_id_sender, user_id2: +user_id }
       ])
+      console.log({ user_id, user_id_sender, friend });
+
       if (!friend) {
         //Tạo lời mời kết bạn
         const newRequest = this.friendRequestRepository.create({
@@ -51,6 +53,7 @@ export class FriendService {
         })
         await this.friendRequestRepository.save(newRequest);
       }
+      else throw new HttpException('Đã là bạn bè', HttpStatus.BAD_REQUEST)
     } else {
       //Lời mời kết bạn 2 chiều => trở thành bạn bè
       await this.friendRequestRepository.delete(request);
