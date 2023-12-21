@@ -14,6 +14,7 @@ import { MessageModule } from './message/message.module';
 import { MessageEntity } from './message/entities/message.entity';
 import { GatewayModule } from './gateway/gateway.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     ChatRoomModule,
     MessageModule,
     GatewayModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [
