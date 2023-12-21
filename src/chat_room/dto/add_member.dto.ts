@@ -3,10 +3,11 @@ import { ApiProperty } from "@nestjs/swagger";
 export class AddMemberDto {
     @ApiProperty({
         type: Number,
-        description: 'Id của user được thêm vào nhóm chat',
-        example: 1
+        isArray: true,
+        description: 'Id của các user được thêm vào nhóm chat',
+        example: [1, 2, 3]
     })
-    user_id_add: number
+    user_id_add: number[]
 
     @ApiProperty({
         type: Number,

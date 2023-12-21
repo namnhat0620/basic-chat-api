@@ -7,6 +7,8 @@ import { PaginationDto } from '../utils/dto/pagination.dto';
 import { SwaggerGetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
 import { AddMemberDto } from './dto/add_member.dto';
 import { LeaveChatRoomDto } from './dto/leave-chat_room.dto';
+import { SwaggerGetListMemberResponsePagination } from './response/get-list-member.response';
+import { GetListMemberDto } from './dto/get-list-member.dto';
 
 @Controller('chat-room')
 @ApiTags('ChatRoom')
@@ -66,6 +68,20 @@ export class ChatRoomController {
     @Body() leaveChatRoomDto: LeaveChatRoomDto,
     @Res() res: any) {
     const data = await this.chatRoomService.leaveChatRoom(+user_id, leaveChatRoomDto.room_id);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
+
+  @Get(':user_id/list-member')
+  @ApiOperation({ summary: 'Lấy danh sách thành viên trong chat room', })
+  @ApiResponse({
+    type: SwaggerGetListMemberResponsePagination,
+    status: HttpStatus.OK
+  })
+  async getListMember(
+    @Param('user_id') user_id: string,
+    @Query() getListMemberDto: GetListMemberDto,
+    @Res() res: any) {
+    const data = await this.chatRoomService.getListMember(+user_id, getListMemberDto);
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 }
