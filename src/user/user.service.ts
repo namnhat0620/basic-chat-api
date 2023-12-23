@@ -64,7 +64,7 @@ export class UserService {
 
     //Check password
     if (password === user.password && +user.status === UserStatus.ACTIVE) {
-      return new SignInResponse({ user_id: user.user_id })
+      return new GetDetailUserResponse(user)
     }
     else if (+user.status === UserStatus.BLOCK) {
       throw new HttpException('Tài khoản đã bị khóa!', HttpStatus.FORBIDDEN)
