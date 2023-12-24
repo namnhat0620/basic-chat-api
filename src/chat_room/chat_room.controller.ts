@@ -9,6 +9,7 @@ import { AddMemberDto } from './dto/add_member.dto';
 import { LeaveChatRoomDto } from './dto/leave-chat_room.dto';
 import { SwaggerGetListMemberResponsePagination } from './response/get-list-member.response';
 import { GetListMemberDto } from './dto/get-list-member.dto';
+import { UpdateChatRoomDto } from './dto/update-chat_room.dto';
 
 @Controller('chat-room')
 @ApiTags('ChatRoom')
@@ -82,6 +83,17 @@ export class ChatRoomController {
     @Query() getListMemberDto: GetListMemberDto,
     @Res() res: any) {
     const data = await this.chatRoomService.getListMember(+user_id, getListMemberDto);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
+
+  @Post(':user_id/update')
+  @ApiOperation({ summary: 'Cập nhật thông tin nhóm chat', })
+  @ApiResponse({
+    type: BaseResponse,
+    status: HttpStatus.OK
+  })
+  async update(@Param('user_id') user_id: string, @Body() updateChatRoomDto: UpdateChatRoomDto, @Res() res: any) {
+    const data = await this.chatRoomService.update(+user_id, updateChatRoomDto);
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 }

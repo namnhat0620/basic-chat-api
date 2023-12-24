@@ -9,7 +9,8 @@ import { PaginationDto } from '../utils/dto/pagination.dto';
 import { GetChatRoomDetailResponse, GetListChatRoomResponsePagination } from './response/get-list-chat_room.response';
 import { AddMemberDto } from './dto/add_member.dto';
 import { GetListMemberDto } from './dto/get-list-member.dto';
-import { GetDetailUserResponse } from 'src/user/response/get-detail.response';
+import { GetDetailUserResponse } from '../user/response/get-detail.response';
+import { UpdateChatRoomDto } from './dto/update-chat_room.dto';
 
 @Injectable()
 export class ChatRoomService {
@@ -126,6 +127,17 @@ export class ChatRoomService {
     //Map response
     const list = listMember.map(item => new GetDetailUserResponse(item.user))
     return { limit, total_record, list };
+  }
+
+  async update(user_id: number, updateChatRoomDto: UpdateChatRoomDto) {
+    const { room_id, avatar, name } = updateChatRoomDto
+    //Validate
+    await this.userService.checkUsers([user_id])
+    await this.getChatRoom(user_id, updateChatRoomDto.room_id)
+
+    //Update
+    const roomUpdateInfo = this.chatRoomRepository.create({ room_id, avatar, room_name: name })
+    await this.chatRoomRepository.save(roomUpdateInfo)
   }
   //============SUPPORT FUNCTION=================//
 

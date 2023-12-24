@@ -47,25 +47,25 @@ export class UserController {
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 
-  @Get('/detail')
+  @Get(':user_id/detail')
   @ApiOperation({ summary: 'Tìm user bằng username/email', })
   @ApiResponse({
     type: SwaggerGetDetailUserResponse,
     status: HttpStatus.OK
   })
-  async getDetail(@Query() getDetailDto: GetDetailUserDto, @Res() res: any) {
-    const data = await this.userService.getDetailUser(getDetailDto);
+  async getDetail(@Param('user_id') user_id: string, @Query() getDetailDto: GetDetailUserDto, @Res() res: any) {
+    const data = await this.userService.getDetailUser(+user_id, getDetailDto);
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 
-  // @Post(':user_id/block')
-  // @ApiOperation({ summary: 'Block user', })
-  // @ApiResponse({
-  //   type: BaseResponse,
-  //   status: HttpStatus.OK
-  // })
-  // async blockUser(@Param('user_id') user_id: string, @Body() blockUserDto: BlockUserDto, @Res() res: any) {
-  //   const data = await this.userService.blockUser(+user_id, blockUserDto);
-  //   return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
-  // }
+  @Post(':user_id/block')
+  @ApiOperation({ summary: 'Block user', })
+  @ApiResponse({
+    type: BaseResponse,
+    status: HttpStatus.OK
+  })
+  async blockUser(@Param('user_id') user_id: string, @Body() blockUserDto: BlockUserDto, @Res() res: any) {
+    const data = await this.userService.blockUser(+user_id, blockUserDto);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
 }

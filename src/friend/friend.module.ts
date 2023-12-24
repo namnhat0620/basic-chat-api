@@ -6,9 +6,10 @@ import { FriendEntity } from './entities/friend.entity';
 import { UserEntity } from '../user/entities/user.entity';
 import { FriendRequestEntity } from './entities/friend-request.entity';
 import { UserService } from '../user/user.service';
+import { BlockEntity } from '../user/entities/block.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, FriendEntity, FriendRequestEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity, FriendEntity, FriendRequestEntity, BlockEntity])],
   controllers: [FriendController],
   providers: [FriendService, UserService],
 })

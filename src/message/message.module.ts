@@ -10,9 +10,10 @@ import { ChatRoomEntity } from '../chat_room/entities/chat_room.entity';
 import { RoomMemberEntity } from '../chat_room/entities/room_member.entity';
 import { FriendEntity } from '../friend/entities/friend.entity';
 import { FriendRequestEntity } from '../friend/entities/friend-request.entity';
+import { BlockEntity } from '../user/entities/block.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MessageEntity, UserEntity, ChatRoomEntity, RoomMemberEntity, FriendEntity, FriendRequestEntity])],
+  imports: [TypeOrmModule.forFeature([MessageEntity, UserEntity, ChatRoomEntity, RoomMemberEntity, FriendEntity, FriendRequestEntity, BlockEntity])],
   controllers: [MessageController],
   providers: [MessageService, UserService, ChatRoomService],
 })

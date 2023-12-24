@@ -11,12 +11,16 @@ import { GetDetailUserResponse } from './response/get-detail.response';
 import { BlockUserDto } from './dto/block-user.dto';
 import { FriendEntity } from '../friend/entities/friend.entity';
 import { FriendRequestEntity } from '../friend/entities/friend-request.entity';
+import { BlockEntity } from './entities/block.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
+
+    @InjectRepository(BlockEntity)
+    private blockRepository: Repository<BlockEntity>,
 
     @InjectRepository(FriendEntity)
     private friendRepository: Repository<FriendEntity>,
@@ -38,14 +42,26 @@ export class UserService {
   async update(user_id: number, createUserDto: CreateUserDto) {
     const { avatar, username, email, password } = createUserDto
     //Kiểm tra user tồn tại
-    await this.checkUsers([user_id])
+    const userToUpdate = (await this.checkUsers([user_id]))[0]
 
-    //Kiểm tra username/email đã được dùng để đk trước đó chưa
-    const user = await this.userRepository.findOneBy([{ username }, { email }]);
-    if (user) throw new HttpException('Username/Email đã tồn tại', HttpStatus.BAD_REQUEST)
+    if (userToUpdate.username != username) {
+      //Kiểm tra username đã được dùng để đk trước đó chưa
+      const userCheckUsername = await this.userRepository.findOneBy({ username });
+      if (userCheckUsername && userCheckUsername.user_id != userToUpdate.user_id)
+        throw new HttpException('Username đã tồn tại', HttpStatus.BAD_REQUEST)
+    }
+
+    if (userToUpdate.email != email) {
+      //Kiểm tra username/email đã được dùng để đk trước đó chưa
+      const userCheckEmail = await this.userRepository.findOneBy({ email });
+      if (userCheckEmail && userCheckEmail.user_id != userToUpdate.user_id)
+        throw new HttpException('Email đã tồn tại', HttpStatus.BAD_REQUEST)
+    }
 
     //Save to db
-    const newUser = this.userRepository.create({ user_id, avatar, username, email, password, status: UserStatus.ACTIVE })
+    const newUser = this.userRepository.create({
+      user_id, avatar, username, email, password, status: UserStatus.ACTIVE
+    })
     await this.userRepository.save(newUser)
   }
 
@@ -74,45 +90,57 @@ export class UserService {
     }
   }
 
-  async getDetailUser(getDetailDto: GetDetailUserDto) {
+  async getDetailUser(user_id: number, getDetailDto: GetDetailUserDto) {
+    //Check user valid
+    await this.checkUsers([user_id])
+
     const { email, username } = getDetailDto;
     const user = await this.userRepository.findOneBy([
       { email: email ? email : '', status: UserStatus.ACTIVE },
       { username: username ? username : '', status: UserStatus.ACTIVE }
     ]);
+
+    //Check block
+    await this.checkBlock(user_id, user.user_id)
+
     if (!user) throw new HttpException('Không tìm thấy user', HttpStatus.NOT_FOUND);
     return new GetDetailUserResponse(user)
   }
 
-  // async blockUser(user_id: number, blockUserDto: BlockUserDto) {
-  //   const { user_id_block, report } = blockUserDto
+  async blockUser(user_id: number, blockUserDto: BlockUserDto) {
+    const { user_id_block, reason } = blockUserDto
 
-  //   //Kiểm tra user hợp lệ
-  //   this.checkUsers([user_id, user_id_block])
+    //Kiểm tra user hợp lệ
+    await this.checkUsers([user_id, user_id_block])
 
-  //   //Block
+    //Block
+    const block = this.blockRepository.create({
+      user_id1: user_id,
+      user_id2: user_id_block,
+      reason
+    })
+    await this.blockRepository.save(block);
 
+    //Xóa bạn
+    await this.friendRepository.delete({
+      user_id1: user_id,
+      user_id2: user_id_block
+    })
+    await this.friendRepository.delete({
+      user_id1: user_id_block,
+      user_id2: user_id
+    })
 
-  //   //Xóa bạn
-  //   await this.friendRepository.delete({
-  //     user_id1: user_id,
-  //     user_id2: user_id_block
-  //   })
-  //   await this.friendRepository.delete({
-  //     user_id1: user_id_block,
-  //     user_id2: user_id
-  //   })
-
-  //   //Xóa lời mời kết bạn
-  //   await this.friendRequestRepository.delete({
-  //     user_id_recipient: user_id,
-  //     user_id_sender: user_id_block
-  //   })
-  //   await this.friendRequestRepository.delete({
-  //     user_id_recipient: user_id_block,
-  //     user_id_sender: user_id
-  //   })
-  // }
+    //Xóa lời mời kết bạn
+    await this.friendRequestRepository.delete({
+      user_id_recipient: user_id,
+      user_id_sender: user_id_block
+    })
+    await this.friendRequestRepository.delete({
+      user_id_recipient: user_id_block,
+      user_id_sender: user_id
+    })
+  }
 
 
   //============SUPPORT FUNCTION=================//
@@ -133,5 +161,13 @@ export class UserService {
       if (listUser.length === user_ids.length) return listUser
       else throw new HttpException('User không tồn tại hoặc đã bị khóa', HttpStatus.NOT_FOUND)
     }
+  }
+
+  async checkBlock(user_id1: number, user_id2: number) {
+    const block = await this.blockRepository.findOneBy([
+      { user_id1, user_id2 },
+      { user_id1: user_id2, user_id2: user_id1 }
+    ])
+    if (block) throw new HttpException('Không tìm thấy user', HttpStatus.NOT_FOUND)
   }
 }

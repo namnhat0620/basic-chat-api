@@ -15,6 +15,7 @@ import { MessageEntity } from './message/entities/message.entity';
 import { GatewayModule } from './gateway/gateway.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { UploadModule } from './upload/upload.module';
+import { BlockEntity } from './user/entities/block.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { UploadModule } from './upload/upload.module';
       username: 'sql12659071',
       password: 'lJzIr9B6d1',
       database: 'sql12659071',
-      entities: [FriendEntity, UserEntity, FriendRequestEntity, ChatRoomEntity, RoomMemberEntity, MessageEntity],
+      entities: [FriendEntity, UserEntity, FriendRequestEntity, ChatRoomEntity, RoomMemberEntity, MessageEntity, BlockEntity],
     }),
     CacheModule.register(),
     UserModule,

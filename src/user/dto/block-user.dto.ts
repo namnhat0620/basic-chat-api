@@ -18,5 +18,5 @@ export class BlockUserDto {
     })
     @IsNotEmpty()
     @IsString()
-    report: string
+    reason: string
 }
