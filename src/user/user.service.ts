@@ -80,7 +80,7 @@ export class UserService {
 
     //Check password
     if (password === user.password && +user.status === UserStatus.ACTIVE) {
-      return new GetDetailUserResponse(user)
+      return new SignInResponse(user)
     }
     else if (+user.status === UserStatus.BLOCK) {
       throw new HttpException('Tài khoản đã bị khóa!', HttpStatus.FORBIDDEN)
@@ -114,12 +114,14 @@ export class UserService {
     await this.checkUsers([user_id, user_id_block])
 
     //Block
-    const block = this.blockRepository.create({
-      user_id1: user_id,
-      user_id2: user_id_block,
-      reason
-    })
-    await this.blockRepository.save(block);
+    await Promise.all(reason.map(async item => {
+      const block = this.blockRepository.create({
+        user_id1: user_id,
+        user_id2: user_id_block,
+        reason: item
+      })
+      await this.blockRepository.save(block);
+    }))
 
     //Xóa bạn
     await this.friendRepository.delete({

@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BaseResponse } from "../../utils/response/base.response";
+import { UserEntity } from "../entities/user.entity";
 
 export class GetDetailUserResponse {
     @ApiProperty({
@@ -31,6 +32,10 @@ export class GetDetailUserResponse {
         this.username = data?.username || '';
         this.email = data?.email || '';
         this.avatar = data?.avatar || '';
+    }
+
+    static mapToList(data?: GetDetailUserResponse[]) {
+        return data?.map(item => new GetDetailUserResponse(item)) || []
     }
 }
 

@@ -6,6 +6,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetListRequestFriendDto } from './dto/get-list-request-friend.dto';
 import { SwaggerGetListRequestFriendResponse } from './response/get-list-request-friend.response';
 import { RequestFriendDto } from './dto/request-friend.dto';
+import { DeleteFriendDto } from './dto/delete-friend.dto';
 
 @Controller('friend')
 @ApiTags('Friend')
@@ -51,6 +52,20 @@ export class FriendController {
     @Query() getListRequestFriend: GetListRequestFriendDto,
     @Res() res: any) {
     const data = await this.friendService.getListRequestFriend(user_id, getListRequestFriend);
+    return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
+  }
+
+  @Post(':user_id/delete')
+  @ApiOperation({ summary: 'Xóa kết bạn' })
+  @ApiResponse({
+    type: BaseResponse,
+    status: HttpStatus.OK
+  })
+  async deleteFriend(
+    @Param('user_id') user_id_delete: string,
+    @Body() deleteFriendDto: DeleteFriendDto,
+    @Res() res: any) {
+    const data = await this.friendService.deleteFriend(+user_id_delete, deleteFriendDto.user_id);
     return res.status(HttpStatus.OK).send(new BaseResponse({ data }))
   }
 }

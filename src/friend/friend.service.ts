@@ -11,6 +11,7 @@ import { FriendRequestEntity } from './entities/friend-request.entity';
 import { FriendEntity } from './entities/friend.entity';
 import { GetListRequestFriendResponse } from './response/get-list-request-friend.response';
 import { RequestFriendDto } from './dto/request-friend.dto';
+import { DeleteFriendDto } from './dto/delete-friend.dto';
 
 @Injectable()
 export class FriendService {
@@ -98,7 +99,7 @@ export class FriendService {
 
   async getListRequestFriend(user_id: string, getListRequestFriendDto: GetListRequestFriendDto) {
     //Check user hợp lệ
-    const user = await this.userService.checkUsers([+user_id]);
+    await this.userService.checkUsers([+user_id]);
 
     //Lấy điều kiện client
     const page = +getListRequestFriendDto.page || 1;
@@ -143,5 +144,21 @@ export class FriendService {
         break;
     }
     return new GetListRequestFriendResponse({ limit, total_record, list });
+  }
+
+  async deleteFriend(user_id1: number, user_id2: number) {
+    //Validate
+    await this.userService.checkUsers([user_id1, user_id2])
+
+    //Delete friend
+    await this.friendRepository.delete({
+      user_id1,
+      user_id2
+    })
+
+    await this.friendRepository.delete({
+      user_id1: user_id2,
+      user_id2: user_id1
+    })
   }
 }

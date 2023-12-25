@@ -1,15 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BaseResponse } from "../../utils/response/base.response";
+import { GetDetailUserResponse } from "./get-detail.response";
 
-export class SignInResponse {
+export class SignInResponse extends GetDetailUserResponse {
     @ApiProperty({
-        type: Number,
-        example: 1
+        type: String,
+        example: '1234'
     })
-    user_id: number
+    password: string
 
     constructor(data?: SignInResponse) {
-        this.user_id = data?.user_id;
+        super(data)
+        this.password = data?.password;
     }
 }
 

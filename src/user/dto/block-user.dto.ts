@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class BlockUserDto {
     @ApiProperty({
@@ -13,10 +13,10 @@ export class BlockUserDto {
 
     @ApiProperty({
         type: String,
+        isArray: true,
         description: 'Lí do block user',
-        example: 'Sending me spam messages'
+        example: ['Sending me spam messages']
     })
-    @IsNotEmpty()
-    @IsString()
-    reason: string
+    @IsArray()
+    reason: string[]
 }

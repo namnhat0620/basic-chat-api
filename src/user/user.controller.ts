@@ -39,7 +39,7 @@ export class UserController {
   @Post('sign-in')
   @ApiOperation({ summary: 'Đăng nhập', })
   @ApiResponse({
-    type: SwaggerGetDetailUserResponse,
+    type: SwaggerSignInResponse,
     status: HttpStatus.OK
   })
   async signIn(@Body() signInDto: SignInDto, @Res() res: any) {

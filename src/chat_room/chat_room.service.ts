@@ -56,7 +56,12 @@ export class ChatRoomService {
     //Lấy ds room chat
     const [listRoomMember, total_record] = await this.roomMemberRepository.findAndCount({
       where: { user_id },
-      relations: { chat_room: { last_message: { user: true } } },
+      relations: {
+        chat_room: {
+          last_message: { user: true },
+          room_member: { user: true }
+        },
+      },
       take: limit,
       skip
     })

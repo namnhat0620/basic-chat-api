@@ -30,4 +30,9 @@ export class GatewayGateway implements OnGatewayConnection, OnGatewayDisconnect 
   async handleMessageText(@MessageBody() createMessageDto: CreateMessageDto, @ConnectedSocket() client: Socket) {
     return await this.gatewayService.handleMessageText(createMessageDto, client);
   }
+
+  @SubscribeMessage(GatewayEnum.message_file)
+  async handleMessageFile(@MessageBody() createMessageDto: CreateMessageDto, @ConnectedSocket() client: Socket) {
+    return await this.gatewayService.handleMessageFile(createMessageDto, client);
+  }
 }

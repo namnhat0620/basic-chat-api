@@ -23,8 +23,8 @@ export class BlockEntity {
     @JoinColumn({ name: "user_id2" })
     user2: UserEntity
 
-    @Column({
-        type: String
+    @PrimaryColumn({
+        type: 'varchar'
     })
     reason: string;
 }
