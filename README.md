@@ -33,6 +33,11 @@
 $ npm install
 ```
 
+## Config database
+``````
+update config for database in .env file
+``````
+
 ## Running the app
 
 ```bash
